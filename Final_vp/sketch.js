@@ -11,7 +11,7 @@ function setup() {
 }
 
 function draw() {
-  background(bg);
+  background(bg);// 여기는 배경화면
 
   image(house,0,y);
   image(train,x,-250,0,0);
