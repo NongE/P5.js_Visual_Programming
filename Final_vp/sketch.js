@@ -16,7 +16,7 @@ function draw() {
   image(house,0,y);
   image(train,x,-250,0,0);
 
-  if(mouseIsPressed)
+  if(mouseIsPressed) // 마우스 이벤트
   {
     if(y < 0)
     {
