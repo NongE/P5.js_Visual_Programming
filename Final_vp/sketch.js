@@ -21,7 +21,7 @@ function draw() {
   train.position(x,-300);
 
   image(train,x,-250,0,0);
-
+  //  이건 기차위치
   if(mouseIsPressed) // 마우스 이벤트
   {
     if(y < -500)
