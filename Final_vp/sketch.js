@@ -12,13 +12,13 @@ function setup() {
 }
 
 function draw() {// 드로우
-  
+
   background(bg);// 여기는 배경화면
 
   // 이미지 위치조정
   bg.position(0,0);
   house.position(0,y);
-  train.position(x,-300);
+  train.position(x,-100);
 
   image(train,x,-250,0,0);
   //  이건 기차위치
