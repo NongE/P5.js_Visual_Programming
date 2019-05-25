@@ -1,5 +1,6 @@
 let bg;
 let house;
+let bridge;
 let hx = 0;
 let hy = 0;
 let lineAreaX = 30;
@@ -14,6 +15,7 @@ function setup() {
   createCanvas(1200, 800);
   bg = loadImage('background.png');
   house = loadImage('house.png');
+  bridge = loadImage('bridge.png');
 
   line[3] = loadImage('line4.png');
   line[6] = loadImage('line7.png');
@@ -40,7 +42,7 @@ function draw() {
   image(house, hx, hy);
 
   for (let i = 0; i < 10; i++) {
-    lineNumBtn[i].position(lineAreaX + (i * 150), 25);
+    lineNumBtn[i].position(lineAreaX + (i * 150), 0);
     lineNumBtn[i].size(80, 80);
   }
 
@@ -48,12 +50,9 @@ function draw() {
 
   lineNumBtn[3].mousePressed(function() {
     lineNumBtnFlag[3] = 1;
-    print('btn pressed');
-
   });
 
   if (lineNumBtnFlag[3] == 1) {
-    print('flag on!');
     if (houseFlag == 1) {
       tint(255, 255, 255, 255 - (hy/1.5));
       // 하우스 플래그 작동 시 4호선 투명도 조정
@@ -63,7 +62,6 @@ function draw() {
         if (lt < 255) lt += 20;
         //하단에 위치한 집이 안쪽에 위치해야 4호선 노출
         tint(255, 255, 255, lt);
-        print('draw line!');
         image(line[3], 100, 110, 1200 * 0.85, 800 * 0.85);
       }
     }
@@ -84,7 +82,7 @@ function draw() {
 
 
   if (houseFlag == 1) {
-    hy += 15;
+    hy += 25;
     if (hy == 500) {
       houseFlag = 0;
     }
@@ -92,9 +90,21 @@ function draw() {
 
 }
 
+
+function drawBridge(){
+
+  for(let i = 0; i<400; i++)
+  {
+    image(bridge,0,i);
+  }
+
+}
+
+
+
 function mouseWheel(event) {
   //move the square according to the vertical scroll amount
-  if (mouseY >= 25 && mouseY <= 105) {
+  if (mouseY >= 0 && mouseY <= 80) {
 
     lineAreaX += event.delta;
 
