@@ -27,11 +27,25 @@ let line = []; // 노선도 배열
 let lineNumBtn = []; // 호선 버튼 배열
 let lineNumBtnFlag = []; // 호선 선택 여부 버튼
 
-let index = 300;
-let i = 0;
+let lineComboBox;
 
 function setup() {
   createCanvas(1280, 720); // 캔버스 크기 설정
+/*
+  sel = createSelect();
+  sel.size(100,60);
+  sel.style('background','#ffffff33');
+  sel.style('border-color','#ffffff');
+  sel.style('font-size','20px');
+  sel.style('align','center');
+  sel.style('color','#000000');
+  sel.style('font-weight','bold');
+  sel.position(100, 100);
+  sel.option('호선');
+  sel.option('1호선');
+  sel.option('2호선');
+  //sel.changed(mySelectEvent);
+*/
 
   //star = loadImage('star.png');
   bg = loadImage('background.jpg'); // 배경 이미지 로드
