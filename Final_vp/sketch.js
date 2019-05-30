@@ -20,22 +20,36 @@ let houseDownFlag = 0; // 집 이미지 관련 불 변수
 let bridgeUpFlag = 0; // 다리 이미지 관련 불 변수
 let moon_fadein_Flag = 0; // 다리 이미지 관련 불 변수
 let star_fadein_Flag = 0; // 별 이미지 관련 불 변수
-let star_show = 0;
 let station_Click_Flag = 0; // 호선을 클릭 했을 때 한번만 값 초기화 해주기 위한 변수
 
 let line = []; // 노선도 배열
 let lineNumBtn = []; // 호선 버튼 배열
 let lineNumBtnFlag = []; // 호선 선택 여부 버튼
 
-let index = 300;
-let i = 0;
+let index = 0;
+
+//let lineComboBox; // 콤보박스
 
 function setup() {
   createCanvas(1280, 720); // 캔버스 크기 설정
 
-  //star = loadImage('star.png');
+/*
+   lineComboBox = createSelect();
+   lineComboBox.size(100,60);
+   lineComboBox.style('background','#ffffff55');
+   lineComboBox.style('border-color','#ffffff');
+   lineComboBox.style('font-size','20px');
+   lineComboBox.style('align','center');
+   lineComboBox.style('color','#000000');
+   lineComboBox.style('font-weight','bold');
+   lineComboBox.position(100, 100);
+   lineComboBox.option('호선');
+   lineComboBox.option('1호선');
+   lineComboBox.option('2호선');
+   //sel.changed(mySelectEvent);
+*/
+
   bg = loadImage('background.jpg'); // 배경 이미지 로드
-  //  bg.style('z-index','-1');
   house = loadImage('house_3.png'); // 집 이미지 로드
   bridge = loadImage('bridge.png'); // 다리 이미지 로드
   train = loadImage('train.png'); // 기차 이미지 로드
@@ -96,8 +110,7 @@ function draw() {
     lineNumBtn[i].mousePressed(function() { // 해당 호선 버튼 클릭시
       frameRate(60);
 
-      if (star_show == 1) {
-        star_show = 0;
+      if (star_fadein_Flag == 1) {
         for (let i = 0; i < 10; i++) {
           print('hide star');
           star[i].hide();
@@ -164,14 +177,12 @@ function draw() {
   }
 
   if (star_fadein_Flag == 1) {
-    if (star_show == 0) {
       for (let i = 0; i < 10; i++) {
         star[i].show();
-      }
     }
 
 
-    star_show = 1;
+    //star_show = 1;
 
     for (let i = 0; i < total_people; i++) {
       frameRate(3);
