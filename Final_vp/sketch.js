@@ -30,24 +30,29 @@ let index = 0;
 
 let lineComboBox; // 콤보박스
 
+
+let fallingStar_x = [];
+let fallingStar_y = [];
+let fallingStar_tint = 255;
+
 function setup() {
   createCanvas(1280, 720); // 캔버스 크기 설정
 
-/*
-   lineComboBox = createSelect();
-   lineComboBox.size(100,60);
-   lineComboBox.style('background','#ffffff55');
-   lineComboBox.style('border-color','#ffffff');
-   lineComboBox.style('font-size','20px');
-   lineComboBox.style('align','center');
-   lineComboBox.style('color','#000000');
-   lineComboBox.style('font-weight','bold');
-   lineComboBox.position(100, 100);
-   lineComboBox.option('호선');
-   lineComboBox.option('1호선');
-   lineComboBox.option('2호선');
-   //sel.changed(mySelectEvent);
-*/
+  /*
+     lineComboBox = createSelect();
+     lineComboBox.size(100,60);
+     lineComboBox.style('background','#ffffff55');
+     lineComboBox.style('border-color','#ffffff');
+     lineComboBox.style('font-size','20px');
+     lineComboBox.style('align','center');
+     lineComboBox.style('color','#000000');
+     lineComboBox.style('font-weight','bold');
+     lineComboBox.position(100, 100);
+     lineComboBox.option('호선');
+     lineComboBox.option('1호선');
+     lineComboBox.option('2호선');
+     //sel.changed(mySelectEvent);
+  */
 
   bg = loadImage('background.jpg'); // 배경 이미지 로드
   house = loadImage('house_3.png'); // 집 이미지 로드
@@ -89,13 +94,26 @@ function setup() {
   star[8] = createImg('stars/star_1.png');
   star[9] = createImg('stars/star_2.png');
 
+  for (let i = 0; i < total_people; i++) {
+    fallingStar_x[i] = random(0, 1200);
+    fallingStar_y[i] = random(0, 450);
+  }
 
 }
 
 function draw() {
+
+  if (fallingStar_tint < 0) {
+    fallingStar_tint = 255;
+  }
+
+
+
+
   background(bg); // 배경 설정
 
   image(house, 0, house_position_y); // 집 출력
+
 
   if (mouseIsPressed) {
     print(mouseX, mouseY);
@@ -112,9 +130,8 @@ function draw() {
 
       if (star_fadein_Flag == 1) {
         for (let i = 0; i < 10; i++) {
-          print('hide star');
           star[i].hide();
-          text.hide();
+        //  text.hide();
         }
       }
       house_position_y = 470; // 집 위치 초기화
@@ -177,24 +194,44 @@ function draw() {
   }
 
   if (star_fadein_Flag == 1) {
-      for (let i = 0; i < 10; i++) {
-        star[i].show();
+
+    for (let i = 0; i < total_people; i++) {
+
+      strokeWeight(0);
+      fill(255, 255, 255, fallingStar_tint);
+      ellipse(fallingStar_x[i], fallingStar_y[i], 9, 9);
+      fill(255, 255, 255, fallingStar_tint - 50);
+      ellipse(fallingStar_x[i] - 3, fallingStar_y[i] - 3, 9, 9);
+      fill(255, 255, 255, fallingStar_tint - 100);
+      ellipse(fallingStar_x[i] - 6, fallingStar_y[i] - 6, 8, 8);
+      fill(255, 255, 255, fallingStar_tint - 150);
+      ellipse(fallingStar_x[i] - 9, fallingStar_y[i] - 9, 7, 7);
+      fallingStar_x[i]+=5;
+      fallingStar_y[i]+=5;
+      fallingStar_tint-=1/2;
+      if(fallingStar_y[i]>500)
+      {
+        fallingStar_x[i] = random(0,500);
+        fallingStar_y[i] = random(0,500);
+      }
+    }
+/*
+    for (let i = 0; i < 10; i++) {
+      star[i].show();
     }
 
-
-    //star_show = 1;
 
     for (let i = 0; i < total_people; i++) {
       frameRate(3);
       strokeWeight(0);
       star[int(random(0, 10))].position(random(100, 800), random(150, 600));
     }
+    */
   }
 
   if (bridgeUpFlag == 1) { // bridgeUpFlag 변수가 참값일 경우
 
-    if (bridge_position_y >= 560)
-    {
+    if (bridge_position_y >= 560) {
       bridge_position_y -= 25;
     }
 
@@ -219,16 +256,11 @@ function draw() {
     }
   }
 
-  if (star_show == 1 && mouseIsPressed) { //열차칸 클릭
+  if (star_fadein_Flag == 1 && mouseIsPressed) { //열차칸 클릭
     if ((mouseX < 550 && mouseX > 400) && (mouseY > 550 && mouseY < 650)) {
-      text = createElement('h1', 'test');
-      text.position(450, 100);
+      text = createElement('h1', "현재 포화도는 " + total_people + "입니다.");
+      text.position(200, 100);
     }
-
-    //  else if ((mouseX > 220 && mouseX < 360) && (mouseY > 570 && mouseY < 600))
-    //{
-
-    //}
   }
 }
 
