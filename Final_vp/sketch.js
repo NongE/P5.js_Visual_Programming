@@ -93,10 +93,11 @@ function setup() {
   star[7] = createImg('stars/star_2.png');
   star[8] = createImg('stars/star_1.png');
   star[9] = createImg('stars/star_2.png');
+  text = createElement('h1', "현재 포화도는 " + total_people + "입니다.");
 
   for (let i = 0; i < total_people; i++) {
-    fallingStar_x[i] = random(0, 1200);
-    fallingStar_y[i] = random(0, 450);
+    fallingStar_x[i] = random(0, 1280);
+    fallingStar_y[i] = random(0, 500);
   }
 
 }
@@ -129,9 +130,10 @@ function draw() {
       frameRate(60);
 
       if (star_fadein_Flag == 1) {
+        print('hide');
+        text.hide();
         for (let i = 0; i < 10; i++) {
           star[i].hide();
-        //  text.hide();
         }
       }
       house_position_y = 470; // 집 위치 초기화
@@ -195,23 +197,35 @@ function draw() {
 
   if (star_fadein_Flag == 1) {
 
-    for (let i = 0; i < total_people; i++) {
+    for (let i = 0; i < total_people/2; i++) {
 
       strokeWeight(0);
       fill(255, 255, 255, fallingStar_tint);
-      ellipse(fallingStar_x[i], fallingStar_y[i], 9, 9);
-      fill(255, 255, 255, fallingStar_tint - 50);
+      ellipse(fallingStar_x[i], fallingStar_y[i], 10, 10);
+      fill(255, 255, 255, fallingStar_tint - 30);
       ellipse(fallingStar_x[i] - 3, fallingStar_y[i] - 3, 9, 9);
-      fill(255, 255, 255, fallingStar_tint - 100);
+      fill(255, 255, 255, fallingStar_tint - 60);
       ellipse(fallingStar_x[i] - 6, fallingStar_y[i] - 6, 8, 8);
-      fill(255, 255, 255, fallingStar_tint - 150);
+      fill(255, 255, 255, fallingStar_tint - 90);
       ellipse(fallingStar_x[i] - 9, fallingStar_y[i] - 9, 7, 7);
-      fallingStar_x[i]+=5;
-      fallingStar_y[i]+=5;
+      fill(255, 255, 255, fallingStar_tint - 120);
+      ellipse(fallingStar_x[i] - 12, fallingStar_y[i] - 12, 6, 6);
+      fill(255, 255, 255, fallingStar_tint - 150);
+      ellipse(fallingStar_x[i] - 15, fallingStar_y[i] - 15, 5, 5);
+      fill(255, 255, 255, fallingStar_tint - 180);
+      ellipse(fallingStar_x[i] - 18, fallingStar_y[i] - 18, 4, 4);
+      fill(255, 255, 255, fallingStar_tint - 210);
+      ellipse(fallingStar_x[i] - 21, fallingStar_y[i] - 21, 3, 3);
+      fill(255, 255, 255, fallingStar_tint - 240);
+      ellipse(fallingStar_x[i] - 24, fallingStar_y[i] - 24, 2, 2);
+      fill(255, 255, 255, fallingStar_tint - 270);
+      ellipse(fallingStar_x[i] - 27, fallingStar_y[i] - 27, 1, 1);
+      fallingStar_x[i]+=7;
+      fallingStar_y[i]+=7;
       fallingStar_tint-=1/2;
       if(fallingStar_y[i]>500)
       {
-        fallingStar_x[i] = random(0,500);
+        fallingStar_x[i] = random(0,1280);
         fallingStar_y[i] = random(0,500);
       }
     }
@@ -258,7 +272,7 @@ function draw() {
 
   if (star_fadein_Flag == 1 && mouseIsPressed) { //열차칸 클릭
     if ((mouseX < 550 && mouseX > 400) && (mouseY > 550 && mouseY < 650)) {
-      text = createElement('h1', "현재 포화도는 " + total_people + "입니다.");
+
       text.position(200, 100);
     }
   }
