@@ -28,7 +28,7 @@ let lineNumBtnFlag = []; // 호선 선택 여부 버튼
 
 let index = 0;
 
-//let lineComboBox; // 콤보박스
+let lineComboBox; // 콤보박스
 
 function setup() {
   createCanvas(1280, 720); // 캔버스 크기 설정
