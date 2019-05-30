@@ -5,7 +5,7 @@ let train; // 기차 변수
 let moon; // 달 변수
 let total_people = 7;
 let div_total_people = 0;
-
+let text;
 let star = [];
 
 let house_position_y = 470; //집 초기 좌표
@@ -101,6 +101,7 @@ function draw() {
         for (let i = 0; i < 10; i++) {
           print('hide star');
           star[i].hide();
+          text.hide();
         }
       }
       house_position_y = 470; // 집 위치 초기화
@@ -176,7 +177,6 @@ function draw() {
       frameRate(3);
       strokeWeight(0);
       star[int(random(0, 10))].position(random(100, 800), random(150, 600));
-
     }
   }
 
@@ -197,14 +197,6 @@ function draw() {
 
     image(bridge, 0, bridge_position_y);
     image(train, train_position_x, 550);
-
-
-
-
-
-
-
-
   }
 
 
@@ -214,6 +206,18 @@ function draw() {
     if (house_position_y >= 800) { //  1500 이상일 경우
       houseDownFlag = 0; //houseDownFlag다시 거짓으로
     }
+  }
+
+  if (star_show == 1 && mouseIsPressed) { //열차칸 클릭
+    if ((mouseX < 550 && mouseX > 400) && (mouseY > 550 && mouseY < 650)) {
+      text = createElement('h1', 'test');
+      text.position(450, 100);
+    }
+
+    //  else if ((mouseX > 220 && mouseX < 360) && (mouseY > 570 && mouseY < 600))
+    //{
+
+    //}
   }
 }
 
