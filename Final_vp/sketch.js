@@ -20,7 +20,6 @@ let houseDownFlag = 0; // 집 이미지 관련 불 변수
 let bridgeUpFlag = 0; // 다리 이미지 관련 불 변수
 let moon_fadein_Flag = 0; // 다리 이미지 관련 불 변수
 let star_fadein_Flag = 0; // 별 이미지 관련 불 변수
-let star_show = 0;
 let station_Click_Flag = 0; // 호선을 클릭 했을 때 한번만 값 초기화 해주기 위한 변수
 
 let line = []; // 노선도 배열
@@ -111,8 +110,7 @@ function draw() {
     lineNumBtn[i].mousePressed(function() { // 해당 호선 버튼 클릭시
       frameRate(60);
 
-      if (star_show == 1) {
-        star_show = 0;
+      if (star_fadein_Flag == 1) {
         for (let i = 0; i < 10; i++) {
           print('hide star');
           star[i].hide();
@@ -178,14 +176,12 @@ function draw() {
   }
 
   if (star_fadein_Flag == 1) {
-    if (star_show == 0) {
       for (let i = 0; i < 10; i++) {
         star[i].show();
-      }
     }
 
 
-    star_show = 1;
+    //star_show = 1;
 
     for (let i = 0; i < total_people; i++) {
       frameRate(3);
