@@ -53,8 +53,7 @@ function setup() {
      //sel.changed(mySelectEvent);
   */
 
-  //bg = loadImage('background.jpg'); // 배경 이미지 로드
-  bg = loadImage('background_2.jpg'); // 배경 이미지 로드
+  bg = loadImage('background.jpg'); // 배경 이미지 로드
   house = loadImage('house_3.png'); // 집 이미지 로드
   bridge = loadImage('bridge.png'); // 다리 이미지 로드
   train = loadImage('train.png'); // 기차 이미지 로드
@@ -94,21 +93,9 @@ function setup() {
   star[8] = createImg('stars/star_1.png');
   star[9] = createImg('stars/star_2.png');
   text = createElement('p', "현재 포화도는 " + total_people + "입니다.");
-  text.position(-300,-300);
-
-<<<<<<< HEAD
-  for (let i = 0; i < total_people; i++) { // 사람 수 만큼 포문 돌면서 별똥별에 시작 좌표 넣음
-    fallingStar_x[i] = 700;
-    fallingStar_y[i] = 700;
-=======
-  for (let i = 0; i < total_people; i++) {
-    fallingStar_x[i] = random(0, 1280);
-    fallingStar_y[i] = random(0, 600);
->>>>>>> 성보: 별똥별 랜덤 위치 수정
-  }
+  text.position(-300, -300);
 
 }
-
 function draw() {
 
   if (fallingStar_tint < 0) { // 별똥별의 투명값이 0보다 작을경우 초기화
@@ -172,272 +159,156 @@ function draw() {
   tint(255, 255); // houseDownFlag로 인해 변경된 틴트값 변환
 
   if (houseDownFlag == 0 && mouseIsPressed) { // 기차가 들어오기 전 이면서 마우스 클릭했을 경우(아직 호선 선택 이전)
-    if (lineNumBtnFlag[3] == 1)
-    { // 4호선 버튼을 선택 했고
+    if (lineNumBtnFlag[3] == 1) { // 4호선 버튼을 선택 했고
+
+      for (let i = 0; i < total_people; i++) { // 사람 수 만큼 포문 돌면서 별똥별에 시작 좌표 넣음
+        fallingStar_x[i] = 500;
+        fallingStar_y[i] = 500;
+      }
+
       if ((mouseX > 475 && mouseX < 490) && (mouseY > 335 && mouseY < 350)) // 과천 클릭 시
-        {
+      {
         station_Click_Flag = 1; // 역을 클릭했다는 정보 관련 변수 참으로 변환
-        }
-
-      else if ((mouseX > 483 && mouseX < 498) && (mouseY > 305 && mouseY < 320)) // 대공원
-        {
-          station_Click_Flag = 1;
-        }
-
-      else if ((mouseX > 477 && mouseX < 493) && (mouseY > 280 && mouseY < 295)) //경마공원
+      } else if ((mouseX > 483 && mouseX < 498) && (mouseY > 305 && mouseY < 320)) // 대공원
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 455 && mouseX < 470) && (mouseY > 245 && mouseY < 260)) //선바위
+        station_Click_Flag = 1;
+      } else if ((mouseX > 477 && mouseX < 493) && (mouseY > 280 && mouseY < 295)) //경마공원
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 425 && mouseX < 440) && (mouseY > 300 && mouseY < 315)) //남태령
+        station_Click_Flag = 1;
+      } else if ((mouseX > 455 && mouseX < 470) && (mouseY > 245 && mouseY < 260)) //선바위
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 390 && mouseX < 405) && (mouseY > 340 && mouseY < 355)) //사당
+        station_Click_Flag = 1;
+      } else if ((mouseX > 425 && mouseX < 440) && (mouseY > 300 && mouseY < 315)) //남태령
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 380 && mouseX < 395) && (mouseY > 385 && mouseY < 400)) //총신대입구
+        station_Click_Flag = 1;
+      } else if ((mouseX > 390 && mouseX < 405) && (mouseY > 340 && mouseY < 355)) //사당
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 363 && mouseX < 378) && (mouseY > 433 && mouseY < 448)) //동작
+        station_Click_Flag = 1;
+      } else if ((mouseX > 380 && mouseX < 395) && (mouseY > 385 && mouseY < 400)) //총신대입구
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 315 && mouseX < 330) && (mouseY > 455 && mouseY < 470)) //이촌
+        station_Click_Flag = 1;
+      } else if ((mouseX > 363 && mouseX < 378) && (mouseY > 433 && mouseY < 448)) //동작
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 267 && mouseX < 282) && (mouseY > 453 && mouseY < 468)) //신용산
+        station_Click_Flag = 1;
+      } else if ((mouseX > 315 && mouseX < 330) && (mouseY > 455 && mouseY < 470)) //이촌
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 227 && mouseX < 242) && (mouseY > 415 && mouseY < 430)) //삼각지
+        station_Click_Flag = 1;
+      } else if ((mouseX > 267 && mouseX < 282) && (mouseY > 453 && mouseY < 468)) //신용산
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 255 && mouseX < 270) && (mouseY > 385 && mouseY < 400)) //숙대입구
+        station_Click_Flag = 1;
+      } else if ((mouseX > 227 && mouseX < 242) && (mouseY > 415 && mouseY < 430)) //삼각지
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 280 && mouseX < 295) && (mouseY > 360 && mouseY < 375)) //서울역
+        station_Click_Flag = 1;
+      } else if ((mouseX > 255 && mouseX < 270) && (mouseY > 385 && mouseY < 400)) //숙대입구
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 335 && mouseX < 350) && (mouseY > 238 && mouseY < 253)) //회현
+        station_Click_Flag = 1;
+      } else if ((mouseX > 280 && mouseX < 295) && (mouseY > 360 && mouseY < 375)) //서울역
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 390 && mouseX < 405) && (mouseY > 202 && mouseY < 217)) //명동
+        station_Click_Flag = 1;
+      } else if ((mouseX > 335 && mouseX < 350) && (mouseY > 238 && mouseY < 253)) //회현
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 425 && mouseX < 440) && (mouseY > 175 && mouseY < 190)) //충무로
+        station_Click_Flag = 1;
+      } else if ((mouseX > 390 && mouseX < 405) && (mouseY > 202 && mouseY < 217)) //명동
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 483 && mouseX < 498) && (mouseY > 158 && mouseY < 173)) //동대문역사문화공원
+        station_Click_Flag = 1;
+      } else if ((mouseX > 425 && mouseX < 440) && (mouseY > 175 && mouseY < 190)) //충무로
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 547 && mouseX < 562) && (mouseY > 137 && mouseY < 152)) //동대문
+        station_Click_Flag = 1;
+      } else if ((mouseX > 483 && mouseX < 498) && (mouseY > 158 && mouseY < 173)) //동대문역사문화공원
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 395 && mouseX < 410) && (mouseY > 510 && mouseY < 525)) //오이도
+        station_Click_Flag = 1;
+      } else if ((mouseX > 547 && mouseX < 562) && (mouseY > 137 && mouseY < 152)) //동대문
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 430 && mouseX < 445) && (mouseY > 550 && mouseY < 565)) //정왕
+        station_Click_Flag = 1;
+      } else if ((mouseX > 395 && mouseX < 410) && (mouseY > 510 && mouseY < 525)) //오이도
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 478 && mouseX < 493) && (mouseY > 532 && mouseY < 547)) //신길온천
+        station_Click_Flag = 1;
+      } else if ((mouseX > 430 && mouseX < 445) && (mouseY > 550 && mouseY < 565)) //정왕
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 487 && mouseX < 502) && (mouseY > 480 && mouseY < 495)) //안산
+        station_Click_Flag = 1;
+      } else if ((mouseX > 478 && mouseX < 493) && (mouseY > 532 && mouseY < 547)) //신길온천
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 510 && mouseX < 525) && (mouseY > 442 && mouseY < 457)) //초지
+        station_Click_Flag = 1;
+      } else if ((mouseX > 487 && mouseX < 502) && (mouseY > 480 && mouseY < 495)) //안산
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 548 && mouseX < 563) && (mouseY > 415 && mouseY < 430)) //고잔
+        station_Click_Flag = 1;
+      } else if ((mouseX > 510 && mouseX < 525) && (mouseY > 442 && mouseY < 457)) //초지
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 607 && mouseX < 622) && (mouseY > 410 && mouseY < 425)) //중앙
+        station_Click_Flag = 1;
+      } else if ((mouseX > 548 && mouseX < 563) && (mouseY > 415 && mouseY < 430)) //고잔
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 687 && mouseX < 702) && (mouseY > 430 && mouseY < 445)) //한대앞
+        station_Click_Flag = 1;
+      } else if ((mouseX > 607 && mouseX < 622) && (mouseY > 410 && mouseY < 425)) //중앙
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 732 && mouseX < 747) && (mouseY > 395 && mouseY < 410)) //상록수
+        station_Click_Flag = 1;
+      } else if ((mouseX > 687 && mouseX < 702) && (mouseY > 430 && mouseY < 445)) //한대앞
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 777 && mouseX < 792) && (mouseY > 355 && mouseY < 370)) //반월
+        station_Click_Flag = 1;
+      } else if ((mouseX > 732 && mouseX < 747) && (mouseY > 395 && mouseY < 410)) //상록수
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 774 && mouseX < 789) && (mouseY > 315 && mouseY < 330)) //대야미
+        station_Click_Flag = 1;
+      } else if ((mouseX > 777 && mouseX < 792) && (mouseY > 355 && mouseY < 370)) //반월
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 793 && mouseX < 808) && (mouseY > 280 && mouseY < 295)) //수리산
+        station_Click_Flag = 1;
+      } else if ((mouseX > 774 && mouseX < 789) && (mouseY > 315 && mouseY < 330)) //대야미
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 732 && mouseX < 747) && (mouseY > 255 && mouseY < 270)) //산본
+        station_Click_Flag = 1;
+      } else if ((mouseX > 793 && mouseX < 808) && (mouseY > 280 && mouseY < 295)) //수리산
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 715 && mouseX < 730) && (mouseY > 285 && mouseY < 300)) //금정
+        station_Click_Flag = 1;
+      } else if ((mouseX > 732 && mouseX < 747) && (mouseY > 255 && mouseY < 270)) //산본
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 725 && mouseX < 740) && (mouseY > 335 && mouseY < 350)) //범계
+        station_Click_Flag = 1;
+      } else if ((mouseX > 715 && mouseX < 730) && (mouseY > 285 && mouseY < 300)) //금정
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 685 && mouseX < 700) && (mouseY > 348 && mouseY < 363)) //평촌
+        station_Click_Flag = 1;
+      } else if ((mouseX > 725 && mouseX < 740) && (mouseY > 335 && mouseY < 350)) //범계
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 675 && mouseX < 690) && (mouseY > 280 && mouseY < 295)) //인덕원
+        station_Click_Flag = 1;
+      } else if ((mouseX > 685 && mouseX < 700) && (mouseY > 348 && mouseY < 363)) //평촌
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 650 && mouseX < 665) && (mouseY > 257 && mouseY < 272)) //정부 과천청사
+        station_Click_Flag = 1;
+      } else if ((mouseX > 675 && mouseX < 690) && (mouseY > 280 && mouseY < 295)) //인덕원
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 795 && mouseX < 810) && (mouseY > 130 && mouseY < 145)) //혜화
+        station_Click_Flag = 1;
+      } else if ((mouseX > 650 && mouseX < 665) && (mouseY > 257 && mouseY < 272)) //정부 과천청사
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 835 && mouseX < 850) && (mouseY > 140 && mouseY < 155)) //한성대 입구
+        station_Click_Flag = 1;
+      } else if ((mouseX > 795 && mouseX < 810) && (mouseY > 130 && mouseY < 145)) //혜화
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 827 && mouseX < 842) && (mouseY > 185 && mouseY < 200)) //성신여대 입구
+        station_Click_Flag = 1;
+      } else if ((mouseX > 835 && mouseX < 850) && (mouseY > 140 && mouseY < 155)) //한성대 입구
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 855 && mouseX < 870) && (mouseY > 225 && mouseY < 240)) //길음
+        station_Click_Flag = 1;
+      } else if ((mouseX > 827 && mouseX < 842) && (mouseY > 185 && mouseY < 200)) //성신여대 입구
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 892 && mouseX < 907) && (mouseY > 270 && mouseY < 285)) //미아사거리
+        station_Click_Flag = 1;
+      } else if ((mouseX > 855 && mouseX < 870) && (mouseY > 225 && mouseY < 240)) //길음
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 938 && mouseX < 953) && (mouseY > 292 && mouseY < 307)) //미아
+        station_Click_Flag = 1;
+      } else if ((mouseX > 892 && mouseX < 907) && (mouseY > 270 && mouseY < 285)) //미아사거리
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 888 && mouseX < 903) && (mouseY > 330 && mouseY < 345)) //수유
+        station_Click_Flag = 1;
+      } else if ((mouseX > 938 && mouseX < 953) && (mouseY > 292 && mouseY < 307)) //미아
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 900 && mouseX < 915) && (mouseY > 395 && mouseY < 410)) //쌍문
+        station_Click_Flag = 1;
+      } else if ((mouseX > 888 && mouseX < 903) && (mouseY > 330 && mouseY < 345)) //수유
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 918 && mouseX < 933) && (mouseY > 445 && mouseY < 460)) //창동
+        station_Click_Flag = 1;
+      } else if ((mouseX > 900 && mouseX < 915) && (mouseY > 395 && mouseY < 410)) //쌍문
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 970 && mouseX < 985) && (mouseY > 493 && mouseY < 508)) //노원
+        station_Click_Flag = 1;
+      } else if ((mouseX > 918 && mouseX < 933) && (mouseY > 445 && mouseY < 460)) //창동
       {
-        station_Click_Flag=1;
-      }
-
-      else if ((mouseX > 1057 && mouseX < 1072) && (mouseY > 465 && mouseY < 480)) //상계
+        station_Click_Flag = 1;
+      } else if ((mouseX > 970 && mouseX < 985) && (mouseY > 493 && mouseY < 508)) //노원
       {
-        station_Click_Flag=1;
+        station_Click_Flag = 1;
+      } else if ((mouseX > 1057 && mouseX < 1072) && (mouseY > 465 && mouseY < 480)) //상계
+      {
+        station_Click_Flag = 1;
       }
-    }
-
-
-
-     if (lineNumBtnFlag[6] == 1) { // 7호선 버튼을 선택 했고
-
-       if ((mouseX > 618 && mouseX < 633) && (mouseY > 145 && mouseY < 160)) //노원
-       {
-         station_Click_Flag=1;
-       }
-
-       else if ((mouseX > 345 && mouseX < 360) && (mouseY > 410 && mouseY < 425)) //건대입구
-       {
-         station_Click_Flag=1;
-       }
-
-       else if ((mouseX > 855 && mouseX < 870) && (mouseY > 390 && mouseY < 405)) //가산디지털단지
-       {
-         station_Click_Flag=1;
-       }
-
-       else if ((mouseX > 1065 && mouseX < 1080) && (mouseY > 255 && mouseY < 270)) //온수
-       {
-         station_Click_Flag=1;
-       }
-
-       if ((mouseX > 293 && mouseX < 308) && (mouseY > 460 && mouseY < 475)) //고속터미널
-       {
-         station_Click_Flag=1;
-       }
+    } else if (lineNumBtnFlag[6] == 1) { // 7호선 버튼을 선택 했고
     }
 
     if (station_Click_Flag == 1) { // 역을 선택 했으니 이제 집 이미지 없애고 기차 들어오게 해야하니 그걸 처리해주는 부분
@@ -458,56 +329,46 @@ function draw() {
     image(moon, 1000 - moon_position_y * 1.4, moon_position_y);
   }
 
-<<<<<<< HEAD
   if (star_fadein_Flag == 1) { // 별똥별 애니메이션
-=======
-  if (star_fadein_Flag == 1) {
 
-    for (let i = 0; i < total_people*0.6; i++) {
->>>>>>> 성보: 별똥별 랜덤 위치 수정
 
     for (let i = 0; i < total_people / 2; i++) {
+
       strokeWeight(0);
+
       fill(255, 255, 255, fallingStar_tint);
       ellipse(fallingStar_x[i], fallingStar_y[i], 10, 10);
+
       fill(255, 255, 255, fallingStar_tint - 30);
       ellipse(fallingStar_x[i] - 3, fallingStar_y[i] - 3, 9, 9);
+
       fill(255, 255, 255, fallingStar_tint - 60);
       ellipse(fallingStar_x[i] - 6, fallingStar_y[i] - 6, 8, 8);
+
       fill(255, 255, 255, fallingStar_tint - 90);
       ellipse(fallingStar_x[i] - 9, fallingStar_y[i] - 9, 7, 7);
+
       fill(255, 255, 255, fallingStar_tint - 120);
       ellipse(fallingStar_x[i] - 12, fallingStar_y[i] - 12, 6, 6);
+
       fill(255, 255, 255, fallingStar_tint - 150);
       ellipse(fallingStar_x[i] - 15, fallingStar_y[i] - 15, 5, 5);
+
       fill(255, 255, 255, fallingStar_tint - 180);
       ellipse(fallingStar_x[i] - 18, fallingStar_y[i] - 18, 4, 4);
+
       fill(255, 255, 255, fallingStar_tint - 210);
       ellipse(fallingStar_x[i] - 21, fallingStar_y[i] - 21, 3, 3);
+
       fill(255, 255, 255, fallingStar_tint - 240);
       ellipse(fallingStar_x[i] - 24, fallingStar_y[i] - 24, 2, 2);
+
       fill(255, 255, 255, fallingStar_tint - 270);
       ellipse(fallingStar_x[i] - 27, fallingStar_y[i] - 27, 1, 1);
-<<<<<<< HEAD
+
       fallingStar_x[i] += 7;
       fallingStar_y[i] += 7;
       fallingStar_tint -= 1 / 2;
-=======
-      fallingStar_x[i]+=7;
-      fallingStar_y[i]+=7;
-      fallingStar_tint-=1/2;
-      if(fallingStar_y[i]>600)
-      {
-        fallingStar_x[i] = random(0,1280);
-        fallingStar_y[i] = random(0,600);
-      }
-    }
-/*
-    for (let i = 0; i < 10; i++) {
-      star[i].show();
-    }
-
->>>>>>> 성보: 별똥별 랜덤 위치 수정
 
       if (fallingStar_y[i] > 500) {
         fallingStar_x[i] = random(0, 1280);
@@ -542,12 +403,7 @@ function draw() {
     if ((mouseX < 550 && mouseX > 400) && (mouseY > 550 && mouseY < 650))
       text.show();
 
-<<<<<<< HEAD
     text.position(200, 150);
-=======
-      text.position(180, 100);
-    }
->>>>>>> 성보: 별똥별 랜덤 위치 수정
   }
 }
 
