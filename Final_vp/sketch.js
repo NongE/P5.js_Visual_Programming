@@ -5,7 +5,7 @@ let train; // 기차 변수
 let moon; // 달 변수
 let total_people = 7;
 let div_total_people = 0;
-
+let text;
 let star = [];
 
 let house_position_y = 470; //집 초기 좌표
@@ -20,36 +20,41 @@ let houseDownFlag = 0; // 집 이미지 관련 불 변수
 let bridgeUpFlag = 0; // 다리 이미지 관련 불 변수
 let moon_fadein_Flag = 0; // 다리 이미지 관련 불 변수
 let star_fadein_Flag = 0; // 별 이미지 관련 불 변수
-let star_show = 0;
 let station_Click_Flag = 0; // 호선을 클릭 했을 때 한번만 값 초기화 해주기 위한 변수
 
 let line = []; // 노선도 배열
 let lineNumBtn = []; // 호선 버튼 배열
 let lineNumBtnFlag = []; // 호선 선택 여부 버튼
 
-let lineComboBox;
+let index = 0;
+
+let lineComboBox; // 콤보박스
+
+
+let fallingStar_x = [];
+let fallingStar_y = [];
+let fallingStar_tint = 255;
 
 function setup() {
   createCanvas(1280, 720); // 캔버스 크기 설정
-/*
-  sel = createSelect();
-  sel.size(100,60);
-  sel.style('background','#ffffff33');
-  sel.style('border-color','#ffffff');
-  sel.style('font-size','20px');
-  sel.style('align','center');
-  sel.style('color','#000000');
-  sel.style('font-weight','bold');
-  sel.position(100, 100);
-  sel.option('호선');
-  sel.option('1호선');
-  sel.option('2호선');
-  //sel.changed(mySelectEvent);
-*/
 
-  //star = loadImage('star.png');
+  /*
+     lineComboBox = createSelect();
+     lineComboBox.size(100,60);
+     lineComboBox.style('background','#ffffff55');
+     lineComboBox.style('border-color','#ffffff');
+     lineComboBox.style('font-size','20px');
+     lineComboBox.style('align','center');
+     lineComboBox.style('color','#000000');
+     lineComboBox.style('font-weight','bold');
+     lineComboBox.position(100, 100);
+     lineComboBox.option('호선');
+     lineComboBox.option('1호선');
+     lineComboBox.option('2호선');
+     //sel.changed(mySelectEvent);
+  */
+
   bg = loadImage('background.jpg'); // 배경 이미지 로드
-  //  bg.style('z-index','-1');
   house = loadImage('house_3.png'); // 집 이미지 로드
   bridge = loadImage('bridge.png'); // 다리 이미지 로드
   train = loadImage('train.png'); // 기차 이미지 로드
@@ -88,14 +93,28 @@ function setup() {
   star[7] = createImg('stars/star_2.png');
   star[8] = createImg('stars/star_1.png');
   star[9] = createImg('stars/star_2.png');
+  text = createElement('h1', "현재 포화도는 " + total_people + "입니다.");
 
+  for (let i = 0; i < total_people; i++) {
+    fallingStar_x[i] = random(0, 1280);
+    fallingStar_y[i] = random(0, 500);
+  }
 
 }
 
 function draw() {
+
+  if (fallingStar_tint < 0) {
+    fallingStar_tint = 255;
+  }
+
+
+
+
   background(bg); // 배경 설정
-  //  bg.position(0,0);
+
   image(house, 0, house_position_y); // 집 출력
+
 
   if (mouseIsPressed) {
     print(mouseX, mouseY);
@@ -110,10 +129,10 @@ function draw() {
     lineNumBtn[i].mousePressed(function() { // 해당 호선 버튼 클릭시
       frameRate(60);
 
-      if (star_show == 1) {
-        star_show = 0;
+      if (star_fadein_Flag == 1) {
+        print('hide');
+        text.hide();
         for (let i = 0; i < 10; i++) {
-          print('hide star');
           star[i].hide();
         }
       }
@@ -439,27 +458,56 @@ function draw() {
   }
 
   if (star_fadein_Flag == 1) {
-    if (star_show == 0) {
-      for (let i = 0; i < 10; i++) {
-        star[i].show();
+
+    for (let i = 0; i < total_people/2; i++) {
+
+      strokeWeight(0);
+      fill(255, 255, 255, fallingStar_tint);
+      ellipse(fallingStar_x[i], fallingStar_y[i], 10, 10);
+      fill(255, 255, 255, fallingStar_tint - 30);
+      ellipse(fallingStar_x[i] - 3, fallingStar_y[i] - 3, 9, 9);
+      fill(255, 255, 255, fallingStar_tint - 60);
+      ellipse(fallingStar_x[i] - 6, fallingStar_y[i] - 6, 8, 8);
+      fill(255, 255, 255, fallingStar_tint - 90);
+      ellipse(fallingStar_x[i] - 9, fallingStar_y[i] - 9, 7, 7);
+      fill(255, 255, 255, fallingStar_tint - 120);
+      ellipse(fallingStar_x[i] - 12, fallingStar_y[i] - 12, 6, 6);
+      fill(255, 255, 255, fallingStar_tint - 150);
+      ellipse(fallingStar_x[i] - 15, fallingStar_y[i] - 15, 5, 5);
+      fill(255, 255, 255, fallingStar_tint - 180);
+      ellipse(fallingStar_x[i] - 18, fallingStar_y[i] - 18, 4, 4);
+      fill(255, 255, 255, fallingStar_tint - 210);
+      ellipse(fallingStar_x[i] - 21, fallingStar_y[i] - 21, 3, 3);
+      fill(255, 255, 255, fallingStar_tint - 240);
+      ellipse(fallingStar_x[i] - 24, fallingStar_y[i] - 24, 2, 2);
+      fill(255, 255, 255, fallingStar_tint - 270);
+      ellipse(fallingStar_x[i] - 27, fallingStar_y[i] - 27, 1, 1);
+      fallingStar_x[i]+=7;
+      fallingStar_y[i]+=7;
+      fallingStar_tint-=1/2;
+      if(fallingStar_y[i]>500)
+      {
+        fallingStar_x[i] = random(0,1280);
+        fallingStar_y[i] = random(0,500);
       }
     }
+/*
+    for (let i = 0; i < 10; i++) {
+      star[i].show();
+    }
 
-
-    star_show = 1;
 
     for (let i = 0; i < total_people; i++) {
       frameRate(3);
       strokeWeight(0);
       star[int(random(0, 10))].position(random(100, 800), random(150, 600));
-
     }
+    */
   }
 
   if (bridgeUpFlag == 1) { // bridgeUpFlag 변수가 참값일 경우
 
-    if (bridge_position_y >= 560)
-    {
+    if (bridge_position_y >= 560) {
       bridge_position_y -= 25;
     }
 
@@ -473,14 +521,6 @@ function draw() {
 
     image(bridge, 0, bridge_position_y);
     image(train, train_position_x, 550);
-
-
-
-
-
-
-
-
   }
 
 
@@ -489,6 +529,13 @@ function draw() {
     house_position_y += 60; // 집을 점점 사라지게 하기 위해
     if (house_position_y >= 800) { //  1500 이상일 경우
       houseDownFlag = 0; //houseDownFlag다시 거짓으로
+    }
+  }
+
+  if (star_fadein_Flag == 1 && mouseIsPressed) { //열차칸 클릭
+    if ((mouseX < 550 && mouseX > 400) && (mouseY > 550 && mouseY < 650)) {
+
+      text.position(200, 100);
     }
   }
 }
