@@ -53,7 +53,8 @@ function setup() {
      //sel.changed(mySelectEvent);
   */
 
-  bg = loadImage('background.jpg'); // 배경 이미지 로드
+  //bg = loadImage('background.jpg'); // 배경 이미지 로드
+  bg = loadImage('background_2.jpg'); // 배경 이미지 로드
   house = loadImage('house_3.png'); // 집 이미지 로드
   bridge = loadImage('bridge.png'); // 다리 이미지 로드
   train = loadImage('train.png'); // 기차 이미지 로드
@@ -95,9 +96,15 @@ function setup() {
   text = createElement('p', "현재 포화도는 " + total_people + "입니다.");
   text.position(-300,-300);
 
+<<<<<<< HEAD
   for (let i = 0; i < total_people; i++) { // 사람 수 만큼 포문 돌면서 별똥별에 시작 좌표 넣음
     fallingStar_x[i] = 700;
     fallingStar_y[i] = 700;
+=======
+  for (let i = 0; i < total_people; i++) {
+    fallingStar_x[i] = random(0, 1280);
+    fallingStar_y[i] = random(0, 600);
+>>>>>>> 성보: 별똥별 랜덤 위치 수정
   }
 
 }
@@ -451,7 +458,13 @@ function draw() {
     image(moon, 1000 - moon_position_y * 1.4, moon_position_y);
   }
 
+<<<<<<< HEAD
   if (star_fadein_Flag == 1) { // 별똥별 애니메이션
+=======
+  if (star_fadein_Flag == 1) {
+
+    for (let i = 0; i < total_people*0.6; i++) {
+>>>>>>> 성보: 별똥별 랜덤 위치 수정
 
     for (let i = 0; i < total_people / 2; i++) {
       strokeWeight(0);
@@ -475,9 +488,26 @@ function draw() {
       ellipse(fallingStar_x[i] - 24, fallingStar_y[i] - 24, 2, 2);
       fill(255, 255, 255, fallingStar_tint - 270);
       ellipse(fallingStar_x[i] - 27, fallingStar_y[i] - 27, 1, 1);
+<<<<<<< HEAD
       fallingStar_x[i] += 7;
       fallingStar_y[i] += 7;
       fallingStar_tint -= 1 / 2;
+=======
+      fallingStar_x[i]+=7;
+      fallingStar_y[i]+=7;
+      fallingStar_tint-=1/2;
+      if(fallingStar_y[i]>600)
+      {
+        fallingStar_x[i] = random(0,1280);
+        fallingStar_y[i] = random(0,600);
+      }
+    }
+/*
+    for (let i = 0; i < 10; i++) {
+      star[i].show();
+    }
+
+>>>>>>> 성보: 별똥별 랜덤 위치 수정
 
       if (fallingStar_y[i] > 500) {
         fallingStar_x[i] = random(0, 1280);
@@ -512,7 +542,12 @@ function draw() {
     if ((mouseX < 550 && mouseX > 400) && (mouseY > 550 && mouseY < 650))
       text.show();
 
+<<<<<<< HEAD
     text.position(200, 150);
+=======
+      text.position(180, 100);
+    }
+>>>>>>> 성보: 별똥별 랜덤 위치 수정
   }
 }
 
