@@ -3,8 +3,7 @@ let house; // 집 변수
 let bridge; // 다리 변수
 let train; // 기차 변수
 let moon; // 달 변수
-let total_people = 7;
-let div_total_people = 0;
+let total_people = 10;
 let text;
 let star = [];
 
@@ -31,9 +30,9 @@ let index = 0;
 let lineComboBox; // 콤보박스
 
 
-let fallingStar_x = [];
-let fallingStar_y = [];
-let fallingStar_tint = 255;
+let fallingStar_x = []; // 별똥별 x좌표
+let fallingStar_y = []; // 별똥별 y좌표
+let fallingStar_tint = 255; // 별똥별 투명값
 
 function setup() {
   createCanvas(1280, 720); // 캔버스 크기 설정
@@ -93,34 +92,32 @@ function setup() {
   star[7] = createImg('stars/star_2.png');
   star[8] = createImg('stars/star_1.png');
   star[9] = createImg('stars/star_2.png');
-  text = createElement('h1', "현재 포화도는 " + total_people + "입니다.");
+  text = createElement('p', "현재 포화도는 " + total_people + "입니다.");
+  text.position(-300,-300);
 
-  for (let i = 0; i < total_people; i++) {
-    fallingStar_x[i] = random(0, 1280);
-    fallingStar_y[i] = random(0, 500);
+  for (let i = 0; i < total_people; i++) { // 사람 수 만큼 포문 돌면서 별똥별에 시작 좌표 넣음
+    fallingStar_x[i] = 700;
+    fallingStar_y[i] = 700;
   }
 
 }
 
 function draw() {
 
-  if (fallingStar_tint < 0) {
+  if (fallingStar_tint < 0) { // 별똥별의 투명값이 0보다 작을경우 초기화
     fallingStar_tint = 255;
   }
-
-
-
 
   background(bg); // 배경 설정
 
   image(house, 0, house_position_y); // 집 출력
 
 
-  if (mouseIsPressed) {
+  if (mouseIsPressed) { //  좌표 테스트
     print(mouseX, mouseY);
   }
 
-  for (let i = 0; i < 10; i++) { // 버튼 이미지 출력
+  for (let i = 0; i < 10; i++) { // 호선 버튼 이미지 출력
     lineNumBtn[i].position(lineAreaX + (i * 150), 0);
     lineNumBtn[i].size(80, 80);
   }
@@ -129,16 +126,13 @@ function draw() {
     lineNumBtn[i].mousePressed(function() { // 해당 호선 버튼 클릭시
       frameRate(60);
 
-      if (star_fadein_Flag == 1) {
-        print('hide');
-        text.hide();
-        for (let i = 0; i < 10; i++) {
-          star[i].hide();
-        }
+      if (star_fadein_Flag == 1) { // 호선 버튼을 누르면 별을 다시 없애야 하니 그거를 처리해주는 부분
+        text.hide(); // 굴자 자윰
       }
+
       house_position_y = 470; // 집 위치 초기화
       bridge_position_y = 1000; // 다리 위치 초기화
-      moon_position_y = 800;
+      moon_position_y = 800; //  달 위치 초기화
       train_position_x = 1200; // 기차 위치 초기화
 
       star_fadein_Flag = 0;
@@ -450,17 +444,16 @@ function draw() {
     if (moon_position_y >= 90)
       moon_position_y -= 45;
 
-    else {
+    else { // 달이 나오고나서 별이 나오게 하기 위함
       star_fadein_Flag = 1;
     }
 
     image(moon, 1000 - moon_position_y * 1.4, moon_position_y);
   }
 
-  if (star_fadein_Flag == 1) {
+  if (star_fadein_Flag == 1) { // 별똥별 애니메이션
 
-    for (let i = 0; i < total_people/2; i++) {
-
+    for (let i = 0; i < total_people / 2; i++) {
       strokeWeight(0);
       fill(255, 255, 255, fallingStar_tint);
       ellipse(fallingStar_x[i], fallingStar_y[i], 10, 10);
@@ -482,36 +475,21 @@ function draw() {
       ellipse(fallingStar_x[i] - 24, fallingStar_y[i] - 24, 2, 2);
       fill(255, 255, 255, fallingStar_tint - 270);
       ellipse(fallingStar_x[i] - 27, fallingStar_y[i] - 27, 1, 1);
-      fallingStar_x[i]+=7;
-      fallingStar_y[i]+=7;
-      fallingStar_tint-=1/2;
-      if(fallingStar_y[i]>500)
-      {
-        fallingStar_x[i] = random(0,1280);
-        fallingStar_y[i] = random(0,500);
+      fallingStar_x[i] += 7;
+      fallingStar_y[i] += 7;
+      fallingStar_tint -= 1 / 2;
+
+      if (fallingStar_y[i] > 500) {
+        fallingStar_x[i] = random(0, 1280);
+        fallingStar_y[i] = random(0, 500);
       }
     }
-/*
-    for (let i = 0; i < 10; i++) {
-      star[i].show();
-    }
-
-
-    for (let i = 0; i < total_people; i++) {
-      frameRate(3);
-      strokeWeight(0);
-      star[int(random(0, 10))].position(random(100, 800), random(150, 600));
-    }
-    */
   }
 
   if (bridgeUpFlag == 1) { // bridgeUpFlag 변수가 참값일 경우
-
     if (bridge_position_y >= 560) {
       bridge_position_y -= 25;
     }
-
-
 
     if (train_position_x >= 120)
       train_position_x -= 25;
@@ -523,8 +501,6 @@ function draw() {
     image(train, train_position_x, 550);
   }
 
-
-
   if (houseDownFlag == 1) { //houseDownFlag 값 침일 경우
     house_position_y += 60; // 집을 점점 사라지게 하기 위해
     if (house_position_y >= 800) { //  1500 이상일 경우
@@ -533,10 +509,10 @@ function draw() {
   }
 
   if (star_fadein_Flag == 1 && mouseIsPressed) { //열차칸 클릭
-    if ((mouseX < 550 && mouseX > 400) && (mouseY > 550 && mouseY < 650)) {
+    if ((mouseX < 550 && mouseX > 400) && (mouseY > 550 && mouseY < 650))
+      text.show();
 
-      text.position(200, 100);
-    }
+    text.position(200, 150);
   }
 }
 
