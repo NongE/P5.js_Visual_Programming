@@ -55,7 +55,6 @@ let ty = [];
 let splashStarFlag = 0;
 ///   끝   ///
 
-let index = 0;
 
 
 
@@ -256,11 +255,43 @@ function draw() {
       {
         splashStarFlag = 1;
         station_Click_Flag = 1;
-        tmpIndex = 98;
-        stationName = lint4Table.get(int(getTimeNum) + 98, '역');
+        tmpIndex = 96;
+        stationName = lint4Table.get(int(getTimeNum) + 96, '역');
 
       }
     } else if (lineNumBtnFlag[6] == 1) { // 7호선 버튼을 선택 했고
+
+      if ((mouseX > 1065 && mouseX < 1080) && (mouseY > 255 && mouseY < 270)) //온수
+      {
+        splashStarFlag = 1;
+        station_Click_Flag = 1;
+        tmpIndex = 0;
+        stationName = lint7Table.get(getTimeNum, '역');
+      } else if ((mouseX > 855 && mouseX < 870) && (mouseY > 390 && mouseY < 405)) //가산디지털단지
+      {
+        splashStarFlag = 1;
+        station_Click_Flag = 1;
+        tmpIndex = 24;
+        stationName = lint7Table.get(int(getTimeNum) + 24, '역');
+      } else if ((mouseX > 293 && mouseX < 308) && (mouseY > 460 && mouseY < 475)) //고속터미널
+      {
+        splashStarFlag = 1;
+        station_Click_Flag = 1;
+        tmpIndex = 48;
+        stationName = lint7Table.get(int(getTimeNum) + 48, '역');
+      } else if ((mouseX > 345 && mouseX < 360) && (mouseY > 410 && mouseY < 425)) //건대입구
+      {
+        station_Click_Flag = 1;
+        tmpIndex = 72;
+        stationName = lint7Table.get(int(getTimeNum) + 72, '역');
+      } else if ((mouseX > 618 && mouseX < 633) && (mouseY > 145 && mouseY < 160)) //노원
+      {
+        splashStarFlag = 1;
+        station_Click_Flag = 1;
+        tmpIndex = 96;
+        stationName = lint7Table.get(int(getTimeNum) + 96, '역');
+      }
+
     }
 
     if (station_Click_Flag == 1) { // 역을 선택 했으니 이제 집 이미지 없애고 기차 들어오게 해야하니 그걸 처리해주는 부분
@@ -359,8 +390,20 @@ function goToBack() {
 
 function updateDB() {
   // 사용자가 선택한 시간대에 맞는 인원 정보 로드
-
-  peopleAll = lint4Table.get(int(getTimeNum) + tmpIndex, '전체인원');
+  let index;
+  for (index = 0; index < 10; index++) {
+    if (lineNumBtnFlag[index] == 1)
+      break;
+  }
+  print('index is '+index);
+  if (index == 3) {
+    peopleAll = lint4Table.get(int(getTimeNum) + tmpIndex, '전체인원');
+  } else if (index == 6) {
+    peopleAll = lint7Table.get(int(getTimeNum) + tmpIndex, '전체인원');
+  }
+  print('tmp index is '+tmpIndex);
+  print('get time nums is '+int(getTimeNum));
+  print('peopleall is '+int(peopleAll));
   if (peopleAll != compareData) { // 이전 데이터와 비교해서 만일 다르다면(사용자가 새로운 값을 선택했을 경우) 새로고침 진행
     starAll = peopleAll;
 
