@@ -43,6 +43,15 @@ let tmpIndex = 0; // 임시로 인덱스를 저장할 변수
 let compareData = 0;
 ///      끝      ///
 
+
+/// 사용자 검색 관련 ///
+let searchData;
+let searchBtn;
+let getData;
+
+///   끝   ///
+
+
 /// 별똥별 관련 변수 ///
 let fallingStar_x = []; // 별똥별 x좌표
 let fallingStar_y = []; // 별똥별 y좌표
@@ -52,7 +61,7 @@ let fallingStar_tint = 255; // 별똥별 투명값
 /// 초기화면 별똥별 효과 관련 변수 ///
 let tx = [];
 let ty = [];
-let splashStarFlag = 0;
+let splashStarFlag = 1;
 ///   끝   ///
 
 
@@ -130,6 +139,17 @@ function setup() {
   timeComboBox.option('23시');
   timeComboBox.changed(getTime); // 사용자가 콤보박스 옵션 선택 시 getTime 함수 실행
   ///   끝   ///
+
+
+  searchData = createInput();
+  searchData.position(290, 40);
+  searchData.size(100, 35);
+
+  searchBtn = createButton('검색');
+  searchBtn.position(400, 40);
+  searchBtn.size(60, 41);
+  searchBtn.mousePressed(findData);
+
 
   /// 이하 뒤로가기 버튼 관련 구문 ///
   backBtn = createButton('뒤로 가기');
@@ -376,34 +396,72 @@ function Init() {
 function getLine() {
   getLineNum = lineComboBox.value().replace(/[^0-9]/g, ""); // 가져온 데이터 중 숫자만 걸러냄
   lineUpdateFlag = 1; // 사용자가 호선을 선택했으므로 업데이트가 필요해 업데이트 관련 플래그 작동
+  searchFlag = 0;
 }
 
 function getTime() {
   getTimeNum = timeComboBox.value().replace(/[^0-9]/g, "");
+  searchFlag = 0;
 }
 
 function goToBack() {
   lineUpdateFlag = 1;
+  searchFlag = 0;
+  searchData.value('');
   backBtn.hide();
+}
+
+function findData() {
+
+  getTime();
+  getLine();
+
+  backBtn.hide();
+  if (getLineNum == 4) {// 4호선일
+
+    getData = searchData.value(); // 텍스트 필드 데이터 가져오
+    getData = lint4Table.matchRow((getData + getTimeNum), 1); // 텍스트 필드 + 시간 조합으로 테이블 가져오기
+    peopleAll = getData.getString(3); // 테이블 중 현재 전체인원
+    stationName = getData.getString(1); // 테이블 중 역 이름 가져오기
+    stationName = stationName.replace(/[0-9]/g, ""); // 가져올때 문자만 가져오기
+    lineNumBtnFlag[3] == 1; // 4호선이 클릭, 플래그 변경
+
+    /// 이하 인덱스 설정 ///
+    if (stationName == '사당') {
+      tmpIndex = 0;
+    } else if (stationName == '서울역') {
+      tmpIndex = 24;
+    } else if (stationName == '동대문') {
+      tmpIndex = 48;
+    } else if (stationName == '금정') {
+      tmpIndex = 72
+    } else if (stationName == '총신대입구') {
+      tmpIndex = 96;
+    }
+    ///   끝   ///
+  }
+  else if(getLineNum == 7)
+  {
+    print('7호선 입니다.');
+  }
+
+  lineUpdateFlag = 1; // 새로고침 필요
+  station_Click_Flag = 1; // 가져온 정보를 토대로 플래그 작동
+
 }
 
 
 function updateDB() {
   // 사용자가 선택한 시간대에 맞는 인원 정보 로드
-  let index;
-  for (index = 0; index < 10; index++) {
-    if (lineNumBtnFlag[index] == 1)
-      break;
-  }
-  print('index is '+index);
-  if (index == 3) {
+
+  if (lineNumBtnFlag[3] == 1) {
     peopleAll = lint4Table.get(int(getTimeNum) + tmpIndex, '전체인원');
-  } else if (index == 6) {
+  }
+  else if(lineNumBtnFlag[6] == 1)
+  {
     peopleAll = lint7Table.get(int(getTimeNum) + tmpIndex, '전체인원');
   }
-  print('tmp index is '+tmpIndex);
-  print('get time nums is '+int(getTimeNum));
-  print('peopleall is '+int(peopleAll));
+
   if (peopleAll != compareData) { // 이전 데이터와 비교해서 만일 다르다면(사용자가 새로운 값을 선택했을 경우) 새로고침 진행
     starAll = peopleAll;
 
@@ -419,6 +477,7 @@ function updateDB() {
   }
   image(moon, 1000 - moon_position_y * 1.4, moon_position_y);
 
+  stationName = stationName.replace(/[0-9]/g, ""); // 가져온 데이터 중 숫자만 걸러냄
   broadcastAll.html(getTimeNum + "시 " + stationName + "의 예상 이용객 수는 " + peopleAll + "명 입니다.");
   broadcastAll.show();
   backBtn.show();
