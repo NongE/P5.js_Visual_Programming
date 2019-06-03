@@ -424,7 +424,7 @@ function findData() {
     peopleAll = getData.getString(3); // 테이블 중 현재 전체인원
     stationName = getData.getString(1); // 테이블 중 역 이름 가져오기
     stationName = stationName.replace(/[0-9]/g, ""); // 가져올때 문자만 가져오기
-    lineNumBtnFlag[3] == 1; // 4호선이 클릭, 플래그 변경
+    lineNumBtnFlag[getLineNum-1] == 1; // 4호선이 클릭, 플래그 변경
 
     /// 이하 인덱스 설정 ///
     if (stationName == '사당') {
@@ -442,7 +442,26 @@ function findData() {
   }
   else if(getLineNum == 7)
   {
-    print('7호선 입니다.');
+    getData = searchData.value(); // 텍스트 필드 데이터 가져오
+    getData = lint7Table.matchRow((getData + getTimeNum), 1); // 텍스트 필드 + 시간 조합으로 테이블 가져오기
+    peopleAll = getData.getString(3); // 테이블 중 현재 전체인원
+    stationName = getData.getString(1); // 테이블 중 역 이름 가져오기
+    stationName = stationName.replace(/[0-9]/g, ""); // 가져올때 문자만 가져오기
+    lineNumBtnFlag[getLineNum-1] == 1; // 4호선이 클릭, 플래그 변경
+
+    /// 이하 인덱스 설정 ///
+    if (stationName == '온수') {
+      tmpIndex = 0;
+    } else if (stationName == '가산디지털단지') {
+      tmpIndex = 24;
+    } else if (stationName == '고속터미널') {
+      tmpIndex = 48;
+    } else if (stationName == '건대입구') {
+      tmpIndex = 72
+    } else if (stationName == '노원') {
+      tmpIndex = 96;
+    }
+    ///   끝   ///
   }
 
   lineUpdateFlag = 1; // 새로고침 필요
