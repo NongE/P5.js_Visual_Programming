@@ -357,6 +357,20 @@ function draw() {
   }
 
   if (moon_fadein_Flag == 1) {
+
+    if (mouseIsPressed) {
+      if ((mouseX >= 160 && mouseX <= 272) && (mouseY >= 590 && mouseY <= 645)) // 첫번째 칸
+      {} else if ((mouseX >= 280 && mouseX <= 392) && (mouseY >= 590 && mouseY <= 645)) // 두번째 칸
+      {} else if ((mouseX >= 405 && mouseX <= 517) && (mouseY >= 590 && mouseY <= 645)) // 세번째 칸
+      {} else if ((mouseX >= 530 && mouseX <= 640) && (mouseY >= 590 && mouseY <= 645)) // 네번째 칸
+      {} else if ((mouseX >= 652 && mouseX <= 763) && (mouseY >= 590 && mouseY <= 645)) // 다섯번째 칸
+      {} else if ((mouseX >= 776 && mouseX <= 640) && (mouseY >= 890 && mouseY <= 645)) // 여섯번째 칸
+      {} else if ((mouseX >= 900 && mouseX <= 640) && (mouseY >= 1014 && mouseY <= 645)) // 일곱번째 칸
+      {} else if ((mouseX >= 1025 && mouseX <= 640) && (mouseY >= 1138 && mouseY <= 645)) // 여덜번째 칸
+      {} else {}
+    }
+
+
     if (moon_position_y >= 90)
       moon_position_y -= 45;
 
@@ -392,12 +406,6 @@ function draw() {
     house_position_y += 60; // 집을 점점 사라지게 하기 위해
     if (house_position_y >= 800) { //  1500 이상일 경우
       houseDownFlag = 0; //houseDownFlag다시 거짓으로
-    }
-  }
-
-  if (star_fadein_Flag == 1 && mouseIsPressed) { //열차칸 클릭
-    if ((mouseX < 550 && mouseX > 400) && (mouseY > 550 && mouseY < 650)) {
-
     }
   }
 }
