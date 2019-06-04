@@ -9,6 +9,9 @@ let bridge_position_y = 1000; // 다리 초기 좌표
 let train_position_x = 1200; // 기차 초기 좌표
 let moon_position_y = 800; // 달의 좌표
 
+let cloud_position_x = [];
+let cloud_position_y = [];
+
 let lineTintCount = 0; // 호선 이미지 투명도
 
 let houseDownFlag = 0; // 집 이미지 관련 불 변수
@@ -64,10 +67,6 @@ let ty = [];
 let splashStarFlag = 1;
 ///   끝   ///
 
-
-
-
-
 function preload() {
   lint4Table = loadTable('DB/line4DB.csv', 'csv', 'header');
   lint7Table = loadTable('DB/line7DB.csv', 'csv', 'header');
@@ -78,16 +77,19 @@ function setup() {
   createCanvas(1280, 720); // 캔버스 크기 설정
 
   /// 이하 호선 콤보박스 관련 구문 ///
-  textAlign(CENTER);
   lineComboBox = createSelect();
-  lineComboBox.size(100, 60);
+  textAlign(CENTER);
+  lineComboBox.size(100, 40);
+  lineComboBox.position(30, 30);
+
   lineComboBox.style('background', '#ffffffff');
   lineComboBox.style('border-color', '#ffffffff');
+
+  lineComboBox.style('border-radius', '6px');
   lineComboBox.style('font-size', '20px');
-  lineComboBox.style('align', 'center');
   lineComboBox.style('color', '#000000');
-  lineComboBox.style('font-weight', 'bold');
-  lineComboBox.position(30, 30);
+  lineComboBox.style('font-weight', 'bolder');
+
   lineComboBox.option('호선');
   lineComboBox.option('1호선');
   lineComboBox.option('2호선');
@@ -104,14 +106,16 @@ function setup() {
 
   /// 이하 시간선택 콤보박스 관련 구문 ///
   timeComboBox = createSelect();
-  timeComboBox.size(100, 60);
+  timeComboBox.size(100, 40);
+  timeComboBox.position(150, 30);
+
   timeComboBox.style('background', '#ffffffff');
   timeComboBox.style('border-color', '#ffffffff');
+  timeComboBox.style('border-radius', '6px');
   timeComboBox.style('font-size', '20px');
-  timeComboBox.style('align', 'center');
   timeComboBox.style('color', '#000000');
-  timeComboBox.style('font-weight', 'bold');
-  timeComboBox.position(160, 30);
+  timeComboBox.style('font-weight', 'bolder');
+
   timeComboBox.option('시간');
   timeComboBox.option('0시');
   timeComboBox.option('1시');
@@ -141,20 +145,39 @@ function setup() {
   ///   끝   ///
 
 
-  searchData = createInput();
-  searchData.position(290, 40);
+  searchData = createInput('');
+  searchData.position(270, 30);
   searchData.size(100, 35);
 
+  searchData.style('border-radius', '6px');
+  searchData.style('font-size', '20px');
+  searchData.style('font-weight', 'bolder');
+
   searchBtn = createButton('검색');
-  searchBtn.position(400, 40);
-  searchBtn.size(60, 41);
+  searchBtn.position(380, 30);
+  searchBtn.size(60, 40);
+
+  searchBtn.style('background', '#ffffffff');
+  searchBtn.style('border-color', '#ffffffff');
+  searchBtn.style('border-radius', '6px');
+  searchBtn.style('font-size', '20px');
+  searchBtn.style('color', '#000000');
+  searchBtn.style('font-weight', 'bolder');
+
   searchBtn.mousePressed(findData);
 
-
   /// 이하 뒤로가기 버튼 관련 구문 ///
-  backBtn = createButton('뒤로 가기');
-  backBtn.size(90, 30);
-  backBtn.position(35, 100);
+  backBtn = createButton('X');
+  backBtn.size(30, 30);
+  backBtn.position(800, 130);
+
+  backBtn.style('background', '#FF2424');
+  backBtn.style('border-color', '#C90000');
+  backBtn.style('border-radius', '20px');
+  backBtn.style('font-family', 'Alfa Slab One');
+  backBtn.style('font-size', '18px');
+  backBtn.style('color', '#000000');
+
   backBtn.mousePressed(goToBack);
   backBtn.hide();
   ///   끝   ///
@@ -179,7 +202,6 @@ function setup() {
   // index 3, index 6 이외 로드된 ready_img는 임시로 넣어둔 이미지
   ///   끝   ///
 
-
   /// 사용자에게 정보를 전달할 Element ///
   broadcastAll = createElement('p'); // 전동차 전체 정보 전달
   broadcastAll.size(1000, 100);
@@ -194,6 +216,19 @@ function setup() {
     tx[i] = random(0, 1280);
     ty[i] = random(0, 500);
   }
+
+  cloud_position_x[0] = 260;
+  cloud_position_y[0] = 400;
+  cloud_position_x[1] = 850;
+  cloud_position_y[1] = 300;
+  cloud_position_x[2] = 50;
+  cloud_position_y[2] = 250;
+  cloud_position_x[3] = 450;
+  cloud_position_y[3] = 150;
+  cloud_position_x[4] = 650;
+  cloud_position_y[4] = 500;
+  cloud_position_x[5] = -150;
+  cloud_position_y[5] = 450;
 }
 
 function draw() {
@@ -350,6 +385,7 @@ function draw() {
 
     image(bridge, 0, bridge_position_y);
     image(train, train_position_x, 550);
+    cloud();
   }
 
   if (houseDownFlag == 1) { //houseDownFlag 값 침일 경우
@@ -365,9 +401,6 @@ function draw() {
     }
   }
 }
-
-
-
 
 function Init() {
 
@@ -417,14 +450,14 @@ function findData() {
   getLine();
 
   backBtn.hide();
-  if (getLineNum == 4) {// 4호선일
+  if (getLineNum == 4) { // 4호선일
 
     getData = searchData.value(); // 텍스트 필드 데이터 가져오
     getData = lint4Table.matchRow((getData + getTimeNum), 1); // 텍스트 필드 + 시간 조합으로 테이블 가져오기
     peopleAll = getData.getString(3); // 테이블 중 현재 전체인원
     stationName = getData.getString(1); // 테이블 중 역 이름 가져오기
     stationName = stationName.replace(/[0-9]/g, ""); // 가져올때 문자만 가져오기
-    lineNumBtnFlag[getLineNum-1] == 1; // 4호선이 클릭, 플래그 변경
+    lineNumBtnFlag[getLineNum - 1] == 1; // 4호선이 클릭, 플래그 변경
 
     /// 이하 인덱스 설정 ///
     if (stationName == '사당') {
@@ -439,15 +472,13 @@ function findData() {
       tmpIndex = 96;
     }
     ///   끝   ///
-  }
-  else if(getLineNum == 7)
-  {
+  } else if (getLineNum == 7) {
     getData = searchData.value(); // 텍스트 필드 데이터 가져오
     getData = lint7Table.matchRow((getData + getTimeNum), 1); // 텍스트 필드 + 시간 조합으로 테이블 가져오기
     peopleAll = getData.getString(3); // 테이블 중 현재 전체인원
     stationName = getData.getString(1); // 테이블 중 역 이름 가져오기
     stationName = stationName.replace(/[0-9]/g, ""); // 가져올때 문자만 가져오기
-    lineNumBtnFlag[getLineNum-1] == 1; // 4호선이 클릭, 플래그 변경
+    lineNumBtnFlag[getLineNum - 1] == 1; // 4호선이 클릭, 플래그 변경
 
     /// 이하 인덱스 설정 ///
     if (stationName == '온수') {
@@ -475,9 +506,7 @@ function updateDB() {
 
   if (lineNumBtnFlag[3] == 1) {
     peopleAll = lint4Table.get(int(getTimeNum) + tmpIndex, '전체인원');
-  }
-  else if(lineNumBtnFlag[6] == 1)
-  {
+  } else if (lineNumBtnFlag[6] == 1) {
     peopleAll = lint7Table.get(int(getTimeNum) + tmpIndex, '전체인원');
   }
 
@@ -502,10 +531,56 @@ function updateDB() {
   backBtn.show();
 }
 
+function cloud() {
+  strokeWeight(0);
+
+  fill(32, 32, 32, 250);
+
+  ellipse(cloud_position_x[0], cloud_position_y[0], 30);
+  ellipse(cloud_position_x[0] + 10, cloud_position_y[0] + 10, 30);
+  ellipse(cloud_position_x[0] + 20, cloud_position_y[0] - 5, 50);
+  ellipse(cloud_position_x[0] + 30, cloud_position_y[0] + 5, 30);
+
+  ellipse(cloud_position_x[1], cloud_position_y[1], 30);
+  ellipse(cloud_position_x[1] + 10, cloud_position_y[1] + 10, 30);
+  ellipse(cloud_position_x[1] + 20, cloud_position_y[1] - 5, 50);
+  ellipse(cloud_position_x[1] + 30, cloud_position_y[1] + 6, 30);
+
+  ellipse(cloud_position_x[2], cloud_position_y[2], 60, 50);
+  ellipse(cloud_position_x[2] + 30, cloud_position_y[2] - 10, 60, 50);
+  ellipse(cloud_position_x[2] + 80, cloud_position_y[2], 60, 50);
+  ellipse(cloud_position_x[2] + 20, cloud_position_y[2] + 20, 60, 50);
+  ellipse(cloud_position_x[2] + 70, cloud_position_y[2] + 15, 60, 50);
+
+  ellipse(cloud_position_x[3], cloud_position_y[3], 60, 50);
+  ellipse(cloud_position_x[3] + 30, cloud_position_y[3] - 10, 60, 50);
+  ellipse(cloud_position_x[3] + 80, cloud_position_y[3], 60, 50);
+  ellipse(cloud_position_x[3] + 20, cloud_position_y[3] + 20, 60, 50);
+  ellipse(cloud_position_x[3] + 60, cloud_position_y[3] + 15, 60, 50);
+
+  ellipse(cloud_position_x[4], cloud_position_y[4], 60, 50);
+  ellipse(cloud_position_x[4] + 30, cloud_position_y[4] - 10, 60, 50);
+  ellipse(cloud_position_x[4] + 80, cloud_position_y[4], 60, 50);
+  ellipse(cloud_position_x[4] + 20, cloud_position_y[4] + 30, 60, 50);
+  ellipse(cloud_position_x[4] + 60, cloud_position_y[4] + 26, 60, 50);
+
+  ellipse(cloud_position_x[5], cloud_position_y[5], 60, 50);
+  ellipse(cloud_position_x[5] + 30, cloud_position_y[5] - 10, 60, 50);
+  ellipse(cloud_position_x[5] + 80, cloud_position_y[5], 60, 50);
+  ellipse(cloud_position_x[5] + 20, cloud_position_y[5] + 30, 60, 50);
+  ellipse(cloud_position_x[5] + 60, cloud_position_y[5] + 26, 60, 50);
+
+  for (let i = 0; i < 6; i++) {
+    if (cloud_position_x[i] > 1300)
+      cloud_position_x[i] = 0;
+
+    cloud_position_x[i] += 1;
+  }
+}
+
 function fallingStar() {
   for (let i = 0; i < starAll; i++) {
 
-    strokeWeight(0);
     fill(255, 255, 255, fallingStar_tint);
     ellipse(fallingStar_x[i], fallingStar_y[i], 10, 10);
 
