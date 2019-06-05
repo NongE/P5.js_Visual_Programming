@@ -84,9 +84,9 @@ function setup() {
 
   lineComboBox.style('background', '#ffffffff');
   lineComboBox.style('border-color', '#ffffffff');
-
   lineComboBox.style('border-radius', '6px');
   lineComboBox.style('font-size', '20px');
+  lineComboBox.style('font-family', 'Jua');
   lineComboBox.style('color', '#000000');
   lineComboBox.style('font-weight', 'bolder');
 
@@ -113,6 +113,7 @@ function setup() {
   timeComboBox.style('border-color', '#ffffffff');
   timeComboBox.style('border-radius', '6px');
   timeComboBox.style('font-size', '20px');
+  timeComboBox.style('font-family', 'Jua');
   timeComboBox.style('color', '#000000');
   timeComboBox.style('font-weight', 'bolder');
 
@@ -154,6 +155,7 @@ function setup() {
   searchData.style('font-weight', 'bolder');
 
   searchBtn = createButton('검색');
+  searchBtn.style('font-family', 'Jua');
   searchBtn.position(380, 30);
   searchBtn.size(60, 40);
 
@@ -167,18 +169,12 @@ function setup() {
   searchBtn.mousePressed(findData);
 
   /// 이하 뒤로가기 버튼 관련 구문 ///
-  backBtn = createButton('X');
-  backBtn.size(30, 30);
-  backBtn.position(800, 130);
-
-  backBtn.style('background', '#FF2424');
-  backBtn.style('border-color', '#C90000');
-  backBtn.style('border-radius', '20px');
-  backBtn.style('font-family', 'Alfa Slab One');
-  backBtn.style('font-size', '18px');
-  backBtn.style('color', '#000000');
-
+  backBtn = createButton('뒤로 가기');
+  backBtn.style('font-family', 'Jua');
+  backBtn.size(90, 30);
+  backBtn.position(35, 80);
   backBtn.mousePressed(goToBack);
+  backBtn.style('border-radius', '6px');
   backBtn.hide();
   ///   끝   ///
 
@@ -218,17 +214,17 @@ function setup() {
   }
 
   cloud_position_x[0] = 260;
-  cloud_position_y[0] = 400;
+  cloud_position_y[0] = 100;
   cloud_position_x[1] = 850;
-  cloud_position_y[1] = 300;
+  cloud_position_y[1] = 150;
   cloud_position_x[2] = 50;
-  cloud_position_y[2] = 250;
+  cloud_position_y[2] = 200;
   cloud_position_x[3] = 450;
-  cloud_position_y[3] = 150;
+  cloud_position_y[3] = 250;
   cloud_position_x[4] = 650;
-  cloud_position_y[4] = 500;
+  cloud_position_y[4] = 300;
   cloud_position_x[5] = -150;
-  cloud_position_y[5] = 450;
+  cloud_position_y[5] = 350;
 }
 
 function draw() {
@@ -360,14 +356,30 @@ function draw() {
 
     if (mouseIsPressed) {
       if ((mouseX >= 160 && mouseX <= 272) && (mouseY >= 590 && mouseY <= 645)) // 첫번째 칸
-      {} else if ((mouseX >= 280 && mouseX <= 392) && (mouseY >= 590 && mouseY <= 645)) // 두번째 칸
-      {} else if ((mouseX >= 405 && mouseX <= 517) && (mouseY >= 590 && mouseY <= 645)) // 세번째 칸
-      {} else if ((mouseX >= 530 && mouseX <= 640) && (mouseY >= 590 && mouseY <= 645)) // 네번째 칸
-      {} else if ((mouseX >= 652 && mouseX <= 763) && (mouseY >= 590 && mouseY <= 645)) // 다섯번째 칸
-      {} else if ((mouseX >= 776 && mouseX <= 640) && (mouseY >= 890 && mouseY <= 645)) // 여섯번째 칸
-      {} else if ((mouseX >= 900 && mouseX <= 640) && (mouseY >= 1014 && mouseY <= 645)) // 일곱번째 칸
-      {} else if ((mouseX >= 1025 && mouseX <= 640) && (mouseY >= 1138 && mouseY <= 645)) // 여덜번째 칸
-      {} else {}
+      {
+        print('1번째 칸입니다.');
+      } else if ((mouseX >= 280 && mouseX <= 392) && (mouseY >= 590 && mouseY <= 645)) // 두번째 칸
+      {
+        print('2번째 칸입니다.');
+      } else if ((mouseX >= 405 && mouseX <= 517) && (mouseY >= 590 && mouseY <= 645)) // 세번째 칸
+      {
+        print('3번째 칸입니다.');
+      } else if ((mouseX >= 530 && mouseX <= 640) && (mouseY >= 590 && mouseY <= 645)) // 네번째 칸
+      {
+        print('4번째 칸입니다.');
+      } else if ((mouseX >= 652 && mouseX <= 763) && (mouseY >= 590 && mouseY <= 645)) // 다섯번째 칸
+      {
+        print('5번째 칸입니다.');
+      } else if ((mouseX >= 776 && mouseX <= 640) && (mouseY >= 890 && mouseY <= 645)) // 여섯번째 칸
+      {
+        print('6번째 칸입니다.');
+      } else if ((mouseX >= 900 && mouseX <= 640) && (mouseY >= 1014 && mouseY <= 645)) // 일곱번째 칸
+      {
+        print('7번째 칸입니다.');
+      } else if ((mouseX >= 1025 && mouseX <= 640) && (mouseY >= 1138 && mouseY <= 645)) // 여덜번째 칸
+      {
+        print('8번째 칸입니다.');
+      }
     }
 
 
