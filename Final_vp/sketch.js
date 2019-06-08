@@ -1,27 +1,32 @@
+// 이미지 관련 변수 //
 let bg; // 배경 변수
 let house; // 집 변수
 let bridge; // 다리 변수
 let train; // 기차 변수
 let moon; // 달 변수
-
+let line = []; // 노선도이미지가 들어간 배열
+let exchange = []; // 빠른 출구 변수
+//
+// 이미지 위치 변수 //
 let house_position_y = 470; //집 초기 좌표
 let bridge_position_y = 1000; // 다리 초기 좌표
 let train_position_x = 1200; // 기차 초기 좌표
 let moon_position_y = 800; // 달의 좌표
-
 let cloud_position_x = [];
 let cloud_position_y = [];
+//
 
-let lineTintCount = 0; // 호선 이미지 투명도
-
+// 각 플래그 값들 //
 let houseDownFlag = 0; // 집 이미지 관련 불 변수
 let bridgeUpFlag = 0; // 다리 이미지 관련 불 변수
 let moon_fadein_Flag = 0; // 다리 이미지 관련 불 변수
 let star_fadein_Flag = 0; // 별 이미지 관련 불 변수
-let station_Click_Flag = 0; // 호선을 클릭 했을 때 한번만 값 초기화 해주기 위한 변수
-
-let line = []; // 노선도이미지가 들어간 배열
+let station_Click_Flag = 0; // 호선을 클릭 했을 때 한번만 값 초기화 해주기 위한 불 변수
 let lineNumBtnFlag = []; // 호선 선택 여부 버튼
+//
+let lineTintCount = 0; // 호선 이미지 투명도
+
+// 콤보박스 관련 변수 //
 
 let lineComboBox; // 호선 콤보박스
 let timeComboBox; // 시간 콤보박스
@@ -36,28 +41,31 @@ let lint4Table; // 4호선 데이터 로드
 let lint7Table; // 7호선 데이터 로드
 
 let stationName; // 지하철 역 이름
-let broadcastAll; // 전체 전동차칸 안내 멘트
-let broadcastAllAnnoun; // 전체 전동차칸 멘트 딱좋은 날씨
+let broadcastAll; // 전체 전동차칸 멘트 ex) 포화도는 --%입니다.
+let broadcastAllAnnoun; // 전체 전동차칸 안내 멘트  ex) 이용하기 좋은 시간이에요
+
 let peopleAll = 10; // 전체 전동차 칸의 인원
 let starAll; // 전체 전동차 칸의 별의 수를 저장
-let broadcastIndiv; // 전동차 각 칸의 멘트
-let broadcastIndivAnnoun; // 전체 전동차칸 멘트
-let peopleIndiv = []; // 전동차 각 칸의 인원
-let getPeopleFlag = 0;
 
+let broadcastIndiv; // 전동차 각 칸의 멘트 ex) 포화도는 --%입니다.
+let broadcastIndivAnnoun; // 전체 전동차칸 멘트 ex) 아직 생각중이라서 변수만 넣어둠, 쓸곳은 따로 없음.
+
+let peopleIndiv = []; // 전동차 각 칸의 인원
 
 let tmpIndex = 0; // 임시로 인덱스를 저장할 변수
 let compareData = 0;
 ///      끝      ///
 
 
+// 빠른 출구 관련 변수 //
+let exchangeNum = []; // 테이블에서 빠른 출구 위치 정보를 저장
+let exchangeFlag = 0; // 빠른 출구 위치 새로고침 관련 플래그
+
 /// 사용자 검색 관련 ///
 let searchData;
 let searchBtn;
 let getData;
-
 ///   끝   ///
-
 
 /// 별똥별 관련 변수 ///
 let fallingStar_x = []; // 별똥별 x좌표
@@ -202,6 +210,12 @@ function setup() {
   // index 3, index 6 이외 로드된 ready_img는 임시로 넣어둔 이미지
   ///   끝   ///
 
+  exchange[0] = createImg('exchange.png');
+  exchange[0].size(30, 30);
+  exchange[1] = createImg('exchange.png');
+  exchange[1].size(30, 30);
+  exchange[0].hide();
+  exchange[1].hide();
   /// 사용자에게 정보를 전달할 Element ///
 
   broadcastAllAnnoun = createElement('p'); // 전동차 전체 정보 전달
@@ -219,10 +233,6 @@ function setup() {
   broadcastIndiv = createElement('p'); // 전동차 개별 칸 정보 전달
   broadcastIndiv.size(1000, 100);
   broadcastIndiv.position(150, 300);
-
-
-
-
   ///   끝   ///
 
   for (let i = 0; i < 5; i++) {
@@ -230,6 +240,7 @@ function setup() {
     ty[i] = random(0, 500);
   }
 
+  // 구름 초기 위치 설정 //
   cloud_position_x[0] = 260;
   cloud_position_y[0] = 100;
   cloud_position_x[1] = 850;
@@ -242,6 +253,7 @@ function setup() {
   cloud_position_y[4] = 300;
   cloud_position_x[5] = -150;
   cloud_position_y[5] = 350;
+  //
 }
 
 function draw() {
@@ -281,6 +293,7 @@ function draw() {
 
       if ((mouseX > 475 && mouseX < 490) && (mouseY > 335 && mouseY < 350)) // 과천 클릭 시
       {
+        exchangeFlag = 0;
         splashStarFlag = 1;
         station_Click_Flag = 1; // 역을 클릭했다는 정보 관련 변수 참으로 변환
         // 아무것도 없음
@@ -288,6 +301,7 @@ function draw() {
 
       } else if ((mouseX > 390 && mouseX < 405) && (mouseY > 340 && mouseY < 355)) //사당
       {
+        exchangeFlag = 0;
         splashStarFlag = 1;
         station_Click_Flag = 1;
         tmpIndex = 0;
@@ -296,6 +310,7 @@ function draw() {
 
       } else if ((mouseX > 280 && mouseX < 295) && (mouseY > 360 && mouseY < 375)) //서울역
       {
+        exchangeFlag = 0;
         splashStarFlag = 1;
         station_Click_Flag = 1;
         tmpIndex = 24;
@@ -303,6 +318,7 @@ function draw() {
 
       } else if ((mouseX > 547 && mouseX < 562) && (mouseY > 137 && mouseY < 152)) //동대문
       {
+        exchangeFlag = 0;
         splashStarFlag = 1;
         station_Click_Flag = 1;
         tmpIndex = 48;
@@ -311,12 +327,14 @@ function draw() {
 
       } else if ((mouseX > 715 && mouseX < 730) && (mouseY > 285 && mouseY < 300)) //금정
       {
+        exchangeFlag = 0;
         station_Click_Flag = 1;
         tmpIndex = 72;
         stationName = lint4Table.get(int(getTimeNum) + 72, '역');
 
       } else if ((mouseX > 380 && mouseX < 395) && (mouseY > 385 && mouseY < 400)) //총신대입구
       {
+        exchangeFlag = 0;
         splashStarFlag = 1;
         station_Click_Flag = 1;
         tmpIndex = 96;
@@ -327,29 +345,34 @@ function draw() {
 
       if ((mouseX > 1065 && mouseX < 1080) && (mouseY > 255 && mouseY < 270)) //온수
       {
+        exchangeFlag = 0;
         splashStarFlag = 1;
         station_Click_Flag = 1;
         tmpIndex = 0;
         stationName = lint7Table.get(getTimeNum, '역');
       } else if ((mouseX > 855 && mouseX < 870) && (mouseY > 390 && mouseY < 405)) //가산디지털단지
       {
+        exchangeFlag = 0;
         splashStarFlag = 1;
         station_Click_Flag = 1;
         tmpIndex = 24;
         stationName = lint7Table.get(int(getTimeNum) + 24, '역');
       } else if ((mouseX > 293 && mouseX < 308) && (mouseY > 460 && mouseY < 475)) //고속터미널
       {
+        exchangeFlag = 0;
         splashStarFlag = 1;
         station_Click_Flag = 1;
         tmpIndex = 48;
         stationName = lint7Table.get(int(getTimeNum) + 48, '역');
       } else if ((mouseX > 345 && mouseX < 360) && (mouseY > 410 && mouseY < 425)) //건대입구
       {
+        exchangeFlag = 0;
         station_Click_Flag = 1;
         tmpIndex = 72;
         stationName = lint7Table.get(int(getTimeNum) + 72, '역');
       } else if ((mouseX > 618 && mouseX < 633) && (mouseY > 145 && mouseY < 160)) //노원
       {
+        exchangeFlag = 0;
         splashStarFlag = 1;
         station_Click_Flag = 1;
         tmpIndex = 96;
@@ -366,83 +389,85 @@ function draw() {
   }
 
   if (moon_fadein_Flag == 1) {
-
-    if (lineNumBtnFlag[3] == 1) {
+    if (lineNumBtnFlag[3] == 1) { // 4호선을 선택한 경우 peopleIndiv 배열에 해당 열차 칸 정보를 가져온다.
       for (let i = 0; i <= 7; i++) {
         peopleIndiv[i] = lint4Table.get(int(getTimeNum) + tmpIndex, i + 4);
       }
+      if (exchangeFlag == 0) {
+        exchangeNum[0] = int(lint4Table.get(int(getTimeNum) + tmpIndex, 'fastEx') / 10);
+        exchangeNum[1] = lint4Table.get(int(getTimeNum) + tmpIndex, 'fastEx') % 10;
+        exchangeFlag = 1;
+      }
+
     }
     if (lineNumBtnFlag[6] == 1) {
-      for (let i = 0; i <= 7; i++) {
+      for (let i = 0; i <= 7; i++) { // 7호선을 선택한 경우 peopleIndiv 배열에 해당 열차 칸 정보를 가져온다.
         peopleIndiv[i] = lint7Table.get(int(getTimeNum) + tmpIndex, i + 4);
       }
       for (let i = 0; i <= 7; i++) {
         print(peopleIndiv[i]);
       }
+      if (exchangeFlag == 0) {
+        exchangeNum[0] = int(lint7Table.get(int(getTimeNum) + tmpIndex, 'fastEx') / 10);
+        exchangeNum[1] = lint7Table.get(int(getTimeNum) + tmpIndex, 'fastEx') % 10;
+        exchangeFlag = 1;
+      }
 
     }
 
     if (mouseIsPressed) {
+      let tempTxt = '첫';
+      let temp = 0;
+      let tempFlag = 0;
+
       if ((mouseX >= 160 && mouseX <= 272) && (mouseY >= 590 && mouseY <= 645)) // 첫번째 칸
       {
-        if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("첫번째 칸의 예상 이용객 수는 " + peopleIndiv[0] + "명, <br>" + "포화도는 " + int(((peopleIndiv[0] / 2) / 1600) * 100) + "% 입니다.");
-
-        } else if (lineNumBtnFlag[6] == 1) {
-          print(getLineNum);
-          broadcastIndiv.html("첫번째 칸의 예상 이용객 수는 " + peopleIndiv[0] + "명, <br>" + "포화도는 " + int(((peopleIndiv[0] / 2) / 1600) * 100) + "% 입니다.");
-        }
+        tempFlag = 1;
+        tempTxt = '첫';
+        temp = 0;
+        //broadcastIndiv.html("첫번째 칸의 예상 이용객 수는 " + peopleIndiv[0] + "명, <br>" + "포화도는 " + int(((peopleIndiv[0]) / 3200) * 100) + "% 입니다.");
       } else if ((mouseX >= 280 && mouseX <= 392) && (mouseY >= 590 && mouseY <= 645)) // 두번째 칸
       {
-        if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("두번째 칸의 예상 이용객 수는 " + peopleIndiv[1] + "명, <br>" + "포화도는 " + int(((peopleIndiv[1] / 2) / 1600) * 100) + "% 입니다.");
-        } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("두번째 칸의 예상 이용객 수는 " + peopleIndiv[1] + "명, <br>" + "포화도는 " + int(((peopleIndiv[1] / 2) / 1600) * 100) + "% 입니다.");
-        }
+        tempFlag = 1;
+        tempTxt = '두';
+        temp = 1;
       } else if ((mouseX >= 405 && mouseX <= 517) && (mouseY >= 590 && mouseY <= 645)) // 세번째 칸
       {
-        if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("세번째 칸의 예상 이용객 수는 " + peopleIndiv[2] + "명, <br>" + "포화도는 " + int(((peopleIndiv[2] / 2) / 1600) * 100) + "% 입니다.");
-        } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("세번째 칸의 예상 이용객 수는 " + peopleIndiv[2] + "명, <br>" + "포화도는 " + int(((peopleIndiv[2] / 2) / 1600) * 100) + "% 입니다.");
-        }
+        tempFlag = 1;
+        tempTxt = '세';
+        temp = 2;
       } else if ((mouseX >= 530 && mouseX <= 640) && (mouseY >= 590 && mouseY <= 645)) // 네번째 칸
       {
-        if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("네번째 칸의 예상 이용객 수는 " + peopleIndiv[3] + "명, <br>" + "포화도는 " + int(((peopleIndiv[3] / 2) / 1600) * 100) + "% 입니다.");
-        } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("네번째 칸의 예상 이용객 수는 " + peopleIndiv[3] + "명, <br>" + "포화도는 " + int(((peopleIndiv[3] / 2) / 1600) * 100) + "% 입니다.");
-        }
+        tempFlag = 1;
+        tempTxt = '네';
+        temp = 3;
       } else if ((mouseX >= 652 && mouseX <= 763) && (mouseY >= 590 && mouseY <= 645)) // 다섯번째 칸
       {
-        if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("다섯번째 칸의 예상 이용객 수는 " + peopleIndiv[4] + "명, <br>" + "포화도는 " + int(((peopleIndiv[4] / 2) / 1600) * 100) + "% 입니다.");
-        } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("다섯번째 칸의 예상 이용객 수는 " + peopleIndiv[4] + "명, <br>" + "포화도는 " + int(((peopleIndiv[4] / 2) / 1600) * 100) + "% 입니다.");
-        }
+        tempFlag = 1;
+        tempTxt = '다섯';
+        temp = 4;
       } else if ((mouseX >= 780 && mouseX <= 890) && (mouseY >= 590 && mouseY <= 645)) // 여섯번째 칸
       {
-        if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("여섯번째 칸의 예상 이용객 수는 " + peopleIndiv[5] + "명, <br>" + "포화도는 " + int(((peopleIndiv[5] / 2) / 1600) * 100) + "% 입니다.");
-        } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("여섯번째 칸의 예상 이용객 수는 " + peopleIndiv[5] + "명, <br>" + "포화도는 " + int(((peopleIndiv[5] / 2) / 1600) * 100) + "% 입니다.");
-        }
+        tempFlag = 1;
+        tempTxt = '여섯';
+        temp = 5;
       } else if ((mouseX >= 905 && mouseX <= 1015) && (mouseY >= 590 && mouseY <= 645)) // 일곱번째 칸
       {
-        if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("일곱번째 칸의 예상 이용객 수는 " + peopleIndiv[6] + "명, <br>" + "포화도는 " + int(((peopleIndiv[6] / 2) / 1600) * 100) + "% 입니다.");
-        } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("일곱번째 칸의 예상 이용객 수는 " + peopleIndiv[6] + "명, <br>" + "포화도는 " + int(((peopleIndiv[6] / 2) / 1600) * 100) + "% 입니다.");
-        }
+        tempFlag = 1;
+        tempTxt = '일곱';
+        temp = 6;
       } else if ((mouseX >= 1025 && mouseX <= 1135) && (mouseY >= 590 && mouseY <= 645)) // 여덜번째 칸
       {
-        if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("여덟번째 칸의 예상 이용객 수는 " + peopleIndiv[7] + "명, <br>" + "포화도는 " + int(((peopleIndiv[7] / 2) / 1600) * 100) + "% 입니다.");
-        } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("여덟번째 칸의 예상 이용객 수는 " + peopleIndiv[7] + "명, <br>" + "포화도는 " + int(((peopleIndiv[7] / 2) / 1600) * 100) + "% 입니다.");
-        }
+        tempFlag = 1;
+        tempTxt = '여덟';
+        temp = 7;
+      } else {
+        tempFlag = 0;
       }
-      broadcastIndiv.show();
+      if (tempFlag == 1) {
+        broadcastIndiv.html(tempTxt + "번째 칸의 예상 포화도는 " + int(((peopleIndiv[temp]) / 3200) * 100) + "% 입니다!!");
+        broadcastIndiv.show();
+      }
     }
 
     if (moon_position_y >= 90)
@@ -474,28 +499,36 @@ function draw() {
     image(train, train_position_x, 550);
 
     cloud();
-    if (train_position_x == 100) {
+    if (train_position_x == 100) { // 열차가 나오고 나서 포화도에 따른 창문 출력
       let j = 0;
       for (let i = 205; i <= 1085; i += 117) {
-        if ((((peopleIndiv[j]) / 3200 * 100)) < 30) {
+        if ((((peopleIndiv[j]) / 3200 * 100)) <= 30) { // 30% 이하의 경우 초록색
           fill(50, 200, 0);
           rect(i, 602, 35, 20, 5, 5);
           rect((i + 45), 602, 35, 20, 5, 5);
-        } else if ((((peopleIndiv[j]) / 3200 * 100)) > 30 && (((peopleIndiv[j]) / 3200 * 100)) < 80) {
+        } else if ((((peopleIndiv[j]) / 3200 * 100)) > 30 && (((peopleIndiv[j]) / 3200 * 100)) <= 90) { // 30~90% 노란색
           fill(200, 200, 0);
           rect(i, 602, 35, 20, 5, 5);
           rect((i + 45), 602, 35, 20, 5, 5);
-        } else if ((((peopleIndiv[j]) / 3200 * 100)) > 80) {
+        } else if ((((peopleIndiv[j]) / 3200 * 100)) > 90) { // 90% 이상 빨간색
           fill(200, 50, 0);
           rect(i, 602, 35, 20, 5, 5);
           rect((i + 45), 602, 35, 20, 5, 5);
         }
         j++;
       }
+      if (mouseIsPressed) {
+        print(mouseX, mouseY)
+      }
+      print(exchangeNum[0], exchangeNum[1]);
+      exchange[0].position(120 + (exchangeNum[0] * 115), 555);
+      exchange[1].position(120 + (exchangeNum[1] * 115), 555);
+      exchange[0].show();
+      exchange[1].show();
 
+      //image(exchange[0], 120 + (exchangeNum[0] * 115), 560, 30, 30);
+      //image(exchange[1], 122 + (exchangeNum[1] * 115), 560, 30, 30);
     }
-
-
 
   }
 
@@ -514,6 +547,9 @@ function Init() {
     broadcastIndiv.hide(); // 글자 지움
     broadcastAllAnnoun.hide(); // 글자 지움
     broadcastIndivAnnoun.hide(); // 글자 지움
+    exchange[0].hide();
+    exchange[1].hide();
+
   }
   house_position_y = 470; // 집 위치 초기화
   bridge_position_y = 1000; // 다리 위치 초기화
@@ -522,7 +558,6 @@ function Init() {
 
   star_fadein_Flag = 0;
   moon_fadein_Flag = 0;
-  getPeopleFlag = 0;
   bridgeUpFlag = 0; // 기차 불변수 초기화
   lineTintCount = 0; // 노선도 투명도 초기화
 
@@ -551,6 +586,7 @@ function getTime() {
 function goToBack() {
   lineUpdateFlag = 1;
   searchFlag = 0;
+//  exchangeFlag = 0;
   searchData.value('');
   backBtn.hide();
 }
@@ -651,11 +687,12 @@ function updateDB() {
     broadcastAllAnnoun.html("무난하게 지하철을 이용할 수 있을거 같아요!");
 
   } else if ((int(((peopleAll) / 26000) * 100) > 90)) {
-    broadcastAllAnnoun.html("세상에...!");
+    broadcastAllAnnoun.html("꼭 이 시간대에 지하철을 이용하셔야 하나요...?");
 
   }
   getTimeNum = timeComboBox.value().replace(/[^0-9]/g, "");
-  broadcastAll.html(getTimeNum + "시 " + stationName + "의 예상 이용객은 약 " + peopleAll + "명으로 <br>" + "포화도는 " + int(((peopleAll) / 26000) * 100) + "% 입니다.");
+  //broadcastAll.html(getTimeNum + "시 " + stationName + "의 예상 이용객은 약 " + peopleAll + "명으로 <br>" + "포화도는 " + int(((peopleAll) / 26000) * 100) + "% 입니다.");
+  broadcastAll.html(getTimeNum + "시 " + stationName + "의 예상 포화도는 약 " + int(((peopleAll) / 26000) * 100) + "% 입니다.");
   backBtn.show();
   broadcastAll.show();
   broadcastAllAnnoun.show();
@@ -741,9 +778,9 @@ function fallingStar() {
     fill(255, 255, 255, fallingStar_tint[i] - 270);
     ellipse(fallingStar_x[i] - 27, fallingStar_y[i] - 27, 1, 1);
 
-    fallingStar_x[i] += 7;
-    fallingStar_y[i] += 7;
-    fallingStar_tint[i] -= 5;
+    fallingStar_x[i] += 5;
+    fallingStar_y[i] += 5;
+    fallingStar_tint[i] -= 2;
 
     if (fallingStar_tint[i] < 0) { // 별똥별의 투명값이 0보다 작을경우 초기화
       fallingStar_tint[i] = random(0, 200);
@@ -758,42 +795,45 @@ function fallingStar() {
 }
 
 function splashStar() {
-  for (let i = 0; i < 5; i++) {
-
+  for (let i = 0; i < 10; i++) {
     strokeWeight(0);
-    fill(255, 255, 255, fallingStar_tint);
+    fill(255, 255, 255, fallingStar_tint[i]);
     ellipse(tx[i], ty[i], 10, 10);
 
-    fill(255, 255, 255, fallingStar_tint - 30);
+    fill(255, 255, 255, fallingStar_tint[i] - 30);
     ellipse(tx[i] - 3, ty[i] - 3, 9, 9);
 
-    fill(255, 255, 255, fallingStar_tint - 60);
+    fill(255, 255, 255, fallingStar_tint[i] - 60);
     ellipse(tx[i] - 6, ty[i] - 6, 8, 8);
 
-    fill(255, 255, 255, fallingStar_tint - 90);
+    fill(255, 255, 255, fallingStar_tint[i] - 90);
     ellipse(tx[i] - 9, ty[i] - 9, 7, 7);
 
-    fill(255, 255, 255, fallingStar_tint - 120);
+    fill(255, 255, 255, fallingStar_tint[i] - 120);
     ellipse(tx[i] - 12, ty[i] - 12, 6, 6);
 
-    fill(255, 255, 255, fallingStar_tint - 150);
+    fill(255, 255, 255, fallingStar_tint[i] - 150);
     ellipse(tx[i] - 15, ty[i] - 15, 5, 5);
 
-    fill(255, 255, 255, fallingStar_tint - 180);
+    fill(255, 255, 255, fallingStar_tint[i] - 180);
     ellipse(tx[i] - 18, ty[i] - 18, 4, 4);
 
-    fill(255, 255, 255, fallingStar_tint - 210);
+    fill(255, 255, 255, fallingStar_tint[i] - 210);
     ellipse(tx[i] - 21, ty[i] - 21, 3, 3);
 
-    fill(255, 255, 255, fallingStar_tint - 240);
+    fill(255, 255, 255, fallingStar_tint[i] - 240);
     ellipse(tx[i] - 24, ty[i] - 24, 2, 2);
 
-    fill(255, 255, 255, fallingStar_tint - 270);
+    fill(255, 255, 255, fallingStar_tint[i] - 270);
     ellipse(tx[i] - 27, ty[i] - 27, 1, 1);
 
     tx[i] += 2;
     ty[i] += 2;
-    fallingStar_tint -= random(0, 1);
+    fallingStar_tint[i] -= 5;
+
+    if (fallingStar_tint[i] < 0) { // 별똥별의 투명값이 0보다 작을경우 초기화
+      fallingStar_tint[i] = random(0, 200);
+    }
 
     if (ty[i] > 500) {
       tx[i] = random(0, 1280);
