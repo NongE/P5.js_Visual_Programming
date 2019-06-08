@@ -37,7 +37,7 @@ let lint7Table; // 7호선 데이터 로드
 
 let stationName; // 지하철 역 이름
 let broadcastAll; // 전체 전동차칸 안내 멘트
-let broadcastAllAnnoun; // 전체 전동차칸 멘트
+let broadcastAllAnnoun; // 전체 전동차칸 멘트 딱좋은 날씨
 let peopleAll = 10; // 전체 전동차 칸의 인원
 let starAll; // 전체 전동차 칸의 별의 수를 저장
 let broadcastIndiv; // 전동차 각 칸의 멘트
@@ -382,73 +382,68 @@ function draw() {
 
     }
 
-
-
     if (mouseIsPressed) {
       if ((mouseX >= 160 && mouseX <= 272) && (mouseY >= 590 && mouseY <= 645)) // 첫번째 칸
       {
         if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("첫번째 칸의 예상 이용객 수는 " + peopleIndiv[0] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[0] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("첫번째 칸의 예상 이용객 수는 " + peopleIndiv[0] + "명, <br>" + "포화도는 " + int(((peopleIndiv[0] / 2) / 1600) * 100) + "% 입니다.");
 
         } else if (lineNumBtnFlag[6] == 1) {
           print(getLineNum);
-          broadcastIndiv.html("첫번째 칸의 예상 이용객 수는 " + peopleIndiv[0] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[0] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("첫번째 칸의 예상 이용객 수는 " + peopleIndiv[0] + "명, <br>" + "포화도는 " + int(((peopleIndiv[0] / 2) / 1600) * 100) + "% 입니다.");
         }
       } else if ((mouseX >= 280 && mouseX <= 392) && (mouseY >= 590 && mouseY <= 645)) // 두번째 칸
       {
         if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("두번째 칸의 예상 이용객 수는 " + peopleIndiv[1] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[1] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("두번째 칸의 예상 이용객 수는 " + peopleIndiv[1] + "명, <br>" + "포화도는 " + int(((peopleIndiv[1] / 2) / 1600) * 100) + "% 입니다.");
         } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("두번째 칸의 예상 이용객 수는 " + peopleIndiv[1] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[1] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("두번째 칸의 예상 이용객 수는 " + peopleIndiv[1] + "명, <br>" + "포화도는 " + int(((peopleIndiv[1] / 2) / 1600) * 100) + "% 입니다.");
         }
       } else if ((mouseX >= 405 && mouseX <= 517) && (mouseY >= 590 && mouseY <= 645)) // 세번째 칸
       {
         if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("세번째 칸의 예상 이용객 수는 " + peopleIndiv[2] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[2] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("세번째 칸의 예상 이용객 수는 " + peopleIndiv[2] + "명, <br>" + "포화도는 " + int(((peopleIndiv[2] / 2) / 1600) * 100) + "% 입니다.");
         } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("세번째 칸의 예상 이용객 수는 " + peopleIndiv[2] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[2] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("세번째 칸의 예상 이용객 수는 " + peopleIndiv[2] + "명, <br>" + "포화도는 " + int(((peopleIndiv[2] / 2) / 1600) * 100) + "% 입니다.");
         }
       } else if ((mouseX >= 530 && mouseX <= 640) && (mouseY >= 590 && mouseY <= 645)) // 네번째 칸
       {
         if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("네번째 칸의 예상 이용객 수는 " + peopleIndiv[3] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[3] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("네번째 칸의 예상 이용객 수는 " + peopleIndiv[3] + "명, <br>" + "포화도는 " + int(((peopleIndiv[3] / 2) / 1600) * 100) + "% 입니다.");
         } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("네번째 칸의 예상 이용객 수는 " + peopleIndiv[3] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[3] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("네번째 칸의 예상 이용객 수는 " + peopleIndiv[3] + "명, <br>" + "포화도는 " + int(((peopleIndiv[3] / 2) / 1600) * 100) + "% 입니다.");
         }
       } else if ((mouseX >= 652 && mouseX <= 763) && (mouseY >= 590 && mouseY <= 645)) // 다섯번째 칸
       {
         if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("다섯번째 칸의 예상 이용객 수는 " + peopleIndiv[4] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[4] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("다섯번째 칸의 예상 이용객 수는 " + peopleIndiv[4] + "명, <br>" + "포화도는 " + int(((peopleIndiv[4] / 2) / 1600) * 100) + "% 입니다.");
         } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("다섯번째 칸의 예상 이용객 수는 " + peopleIndiv[4] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[4] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("다섯번째 칸의 예상 이용객 수는 " + peopleIndiv[4] + "명, <br>" + "포화도는 " + int(((peopleIndiv[4] / 2) / 1600) * 100) + "% 입니다.");
         }
       } else if ((mouseX >= 780 && mouseX <= 890) && (mouseY >= 590 && mouseY <= 645)) // 여섯번째 칸
       {
         if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("여섯번째 칸의 예상 이용객 수는 " + peopleIndiv[5] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[5] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("여섯번째 칸의 예상 이용객 수는 " + peopleIndiv[5] + "명, <br>" + "포화도는 " + int(((peopleIndiv[5] / 2) / 1600) * 100) + "% 입니다.");
         } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("여섯번째 칸의 예상 이용객 수는 " + peopleIndiv[5] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[5] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("여섯번째 칸의 예상 이용객 수는 " + peopleIndiv[5] + "명, <br>" + "포화도는 " + int(((peopleIndiv[5] / 2) / 1600) * 100) + "% 입니다.");
         }
       } else if ((mouseX >= 905 && mouseX <= 1015) && (mouseY >= 590 && mouseY <= 645)) // 일곱번째 칸
       {
         if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("일곱번째 칸의 예상 이용객 수는 " + peopleIndiv[6] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[6] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("일곱번째 칸의 예상 이용객 수는 " + peopleIndiv[6] + "명, <br>" + "포화도는 " + int(((peopleIndiv[6] / 2) / 1600) * 100) + "% 입니다.");
         } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("일곱번째 칸의 예상 이용객 수는 " + peopleIndiv[6] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[6] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("일곱번째 칸의 예상 이용객 수는 " + peopleIndiv[6] + "명, <br>" + "포화도는 " + int(((peopleIndiv[6] / 2) / 1600) * 100) + "% 입니다.");
         }
       } else if ((mouseX >= 1025 && mouseX <= 1135) && (mouseY >= 590 && mouseY <= 645)) // 여덜번째 칸
       {
         if (lineNumBtnFlag[3] == 1) {
-          broadcastIndiv.html("여덟번째 칸의 예상 이용객 수는 " + peopleIndiv[7] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[7] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("여덟번째 칸의 예상 이용객 수는 " + peopleIndiv[7] + "명, <br>" + "포화도는 " + int(((peopleIndiv[7] / 2) / 1600) * 100) + "% 입니다.");
         } else if (lineNumBtnFlag[6] == 1) {
-          broadcastIndiv.html("여덟번째 칸의 예상 이용객 수는 " + peopleIndiv[7] + "명, <br>"+ "포화도는 " + int(((peopleIndiv[7] / 2) / 1600) * 100) + "% 입니다.");
+          broadcastIndiv.html("여덟번째 칸의 예상 이용객 수는 " + peopleIndiv[7] + "명, <br>" + "포화도는 " + int(((peopleIndiv[7] / 2) / 1600) * 100) + "% 입니다.");
         }
-
-
       }
       broadcastIndiv.show();
     }
-
 
     if (moon_position_y >= 90)
       moon_position_y -= 45;
@@ -458,7 +453,6 @@ function draw() {
     }
 
     updateDB(); // 사용자가 선택한 시간에 대한 데이터 갱신
-
   }
 
   if (star_fadein_Flag == 1) { // 별똥별 애니메이션
@@ -481,31 +475,25 @@ function draw() {
 
     cloud();
     if (train_position_x == 100) {
-      let j =0;
+      let j = 0;
       for (let i = 205; i <= 1085; i += 117) {
-          if((((peopleIndiv[j]) / 3200 * 100))<30)
-          {
-            fill(50, 200, 0);
-            rect(i, 602, 35, 20, 5, 5);
-            rect((i + 45), 602, 35, 20, 5, 5);
-          }
-          else if((((peopleIndiv[j]) / 3200 * 100))>30 && (((peopleIndiv[j]) / 3200 * 100)) <80)
-          {
-            fill(200, 200, 0);
-            rect(i, 602, 35, 20, 5, 5);
-            rect((i + 45), 602, 35, 20, 5, 5);
-          }
-
-          else if((((peopleIndiv[j]) / 3200 * 100))>80)
-          {
-            fill(200, 50, 0);
-            rect(i, 602, 35, 20, 5, 5);
-            rect((i + 45), 602, 35, 20, 5, 5);
-          }
-          j++;
+        if ((((peopleIndiv[j]) / 3200 * 100)) < 30) {
+          fill(50, 200, 0);
+          rect(i, 602, 35, 20, 5, 5);
+          rect((i + 45), 602, 35, 20, 5, 5);
+        } else if ((((peopleIndiv[j]) / 3200 * 100)) > 30 && (((peopleIndiv[j]) / 3200 * 100)) < 80) {
+          fill(200, 200, 0);
+          rect(i, 602, 35, 20, 5, 5);
+          rect((i + 45), 602, 35, 20, 5, 5);
+        } else if ((((peopleIndiv[j]) / 3200 * 100)) > 80) {
+          fill(200, 50, 0);
+          rect(i, 602, 35, 20, 5, 5);
+          rect((i + 45), 602, 35, 20, 5, 5);
         }
-
+        j++;
       }
+
+    }
 
 
 
@@ -554,6 +542,7 @@ function getLine() {
 }
 
 function getTime() {
+  broadcastIndiv.hide();
   getTimeNum = timeComboBox.value().replace(/[^0-9]/g, "");
   searchFlag = 0;
 
