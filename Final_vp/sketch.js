@@ -389,34 +389,10 @@ function draw() {
   }
 
   if (moon_fadein_Flag == 1) {
-    if (lineNumBtnFlag[3] == 1) { // 4호선을 선택한 경우 peopleIndiv 배열에 해당 열차 칸 정보를 가져온다.
-      for (let i = 0; i <= 7; i++) {
-        peopleIndiv[i] = lint4Table.get(int(getTimeNum) + tmpIndex, i + 4);
-      }
-      if (exchangeFlag == 0) {
-        exchangeNum[0] = int(lint4Table.get(int(getTimeNum) + tmpIndex, 'fastEx') / 10);
-        exchangeNum[1] = lint4Table.get(int(getTimeNum) + tmpIndex, 'fastEx') % 10;
-        exchangeFlag = 1;
-      }
 
-    }
-
-    if (lineNumBtnFlag[6] == 1) {
-      for (let i = 0; i <= 7; i++) { // 7호선을 선택한 경우 peopleIndiv 배열에 해당 열차 칸 정보를 가져온다.
-        peopleIndiv[i] = lint7Table.get(int(getTimeNum) + tmpIndex, i + 4);
-      }
-      for (let i = 0; i <= 7; i++) {
-        print(peopleIndiv[i]);
-      }
-      if (exchangeFlag == 0) {
-        exchangeNum[0] = int(lint7Table.get(int(getTimeNum) + tmpIndex, 'fastEx') / 10);
-        exchangeNum[1] = lint7Table.get(int(getTimeNum) + tmpIndex, 'fastEx') % 10;
-        exchangeFlag = 1;
-      }
-
-    }
 
     if (mouseIsPressed) {
+
       let tempTxt = '첫';
       let temp = 0;
       let tempFlag = 0;
@@ -581,8 +557,10 @@ function getTime() {
 
   //getTimeNum = timeComboBox.value().replace(\S, "0");
   getTimeNum = timeComboBox.value().replace(/[^0-9]/g, "");
-
-
+  if(getTimeNUm == "")
+  {
+    getTimeNUm = "0";
+  }
   searchFlag = 0;
 
 }
@@ -675,7 +653,6 @@ function updateDB() {
 
 
 
-
     for (let i = 0; i < starAll; i++) { // 사람 수 만큼 포문 돌면서 별똥별에 시작 좌표 넣음
       fallingStar_x[i] = 500;
       fallingStar_y[i] = 500;
@@ -703,6 +680,8 @@ function updateDB() {
   getTimeNum = timeComboBox.value().replace(/[^0-9]/g, "");
   //broadcastAll.html(getTimeNum + "시 " + stationName + "의 예상 이용객은 약 " + peopleAll + "명으로 <br>" + "포화도는 " + int(((peopleAll) / 26000) * 100) + "% 입니다.");
   broadcastAll.html(getTimeNum + "시 " + stationName + "의 예상 포화도는 약 " + int(((peopleAll) / 26000) * 100) + "% 입니다.");
+  exchangeFlag = 0;
+  getPeopleIndiv();
   backBtn.show();
   broadcastAll.show();
   broadcastAllAnnoun.show();
@@ -801,6 +780,35 @@ function fallingStar() {
       fallingStar_x[i] = random(0, 1280);
       fallingStar_y[i] = random(0, 500);
     }
+  }
+}
+
+function getPeopleIndiv() {
+
+  if (lineNumBtnFlag[3] == 1) { // 4호선을 선택한 경우 peopleIndiv 배열에 해당 열차 칸 정보를 가져온다.
+    for (let i = 0; i <= 7; i++) {
+      peopleIndiv[i] = lint4Table.get(int(getTimeNum) + tmpIndex, i + 4);
+    }
+    if (exchangeFlag == 0) {
+      exchangeNum[0] = int(lint4Table.get(int(getTimeNum) + tmpIndex, 'fastEx') / 10);
+      exchangeNum[1] = lint4Table.get(int(getTimeNum) + tmpIndex, 'fastEx') % 10;
+      exchangeFlag = 1;
+    }
+
+  }
+  if (lineNumBtnFlag[6] == 1) {
+    for (let i = 0; i <= 7; i++) { // 7호선을 선택한 경우 peopleIndiv 배열에 해당 열차 칸 정보를 가져온다.
+      peopleIndiv[i] = lint7Table.get(int(getTimeNum) + tmpIndex, i + 4);
+    }
+    for (let i = 0; i <= 7; i++) {
+      print(peopleIndiv[i]);
+    }
+    if (exchangeFlag == 0) {
+      exchangeNum[0] = int(lint7Table.get(int(getTimeNum) + tmpIndex, 'fastEx') / 10);
+      exchangeNum[1] = lint7Table.get(int(getTimeNum) + tmpIndex, 'fastEx') % 10;
+      exchangeFlag = 1;
+    }
+
   }
 }
 
