@@ -400,6 +400,7 @@ function draw() {
       }
 
     }
+
     if (lineNumBtnFlag[6] == 1) {
       for (let i = 0; i <= 7; i++) { // 7호선을 선택한 경우 peopleIndiv 배열에 해당 열차 칸 정보를 가져온다.
         peopleIndiv[i] = lint7Table.get(int(getTimeNum) + tmpIndex, i + 4);
@@ -476,7 +477,6 @@ function draw() {
     else { // 달이 나오고나서 별이 나오게 하기 위함
       star_fadein_Flag = 1;
     }
-
     updateDB(); // 사용자가 선택한 시간에 대한 데이터 갱신
   }
 
@@ -578,7 +578,11 @@ function getLine() {
 
 function getTime() {
   broadcastIndiv.hide();
+
+  //getTimeNum = timeComboBox.value().replace(\S, "0");
   getTimeNum = timeComboBox.value().replace(/[^0-9]/g, "");
+
+
   searchFlag = 0;
 
 }
@@ -586,9 +590,16 @@ function getTime() {
 function goToBack() {
   lineUpdateFlag = 1;
   searchFlag = 0;
-//  exchangeFlag = 0;
+  //  exchangeFlag = 0;
   searchData.value('');
   backBtn.hide();
+  broadcastAll.hide();
+  broadcastAllAnnoun.hide();
+  broadcastIndiv.hide();
+  broadcastAll.hide();
+
+  exchange[0].hide();
+  exchange[1].hide();
 }
 
 function findData() {
@@ -660,10 +671,9 @@ function updateDB() {
 
   if (peopleAll != compareData) { // 이전 데이터와 비교해서 만일 다르다면(사용자가 새로운 값을 선택했을 경우) 새로고침 진행
 
-    {
-      starAll = (peopleAll / 2) / 1600;
+    starAll = (peopleAll / 2) / 1600;
 
-    }
+
 
 
     for (let i = 0; i < starAll; i++) { // 사람 수 만큼 포문 돌면서 별똥별에 시작 좌표 넣음
