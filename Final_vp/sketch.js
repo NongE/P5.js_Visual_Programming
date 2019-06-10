@@ -526,6 +526,8 @@ function Init() {
     broadcastIndiv.hide(); // 글자 지움
     broadcastAllAnnoun.hide(); // 글자 지움
     broadcastIndivAnnoun.hide(); // 글자 지움
+    exchange[0].hide();
+    exchange[1].hide();
 
   }
   house_position_y = 470; // 집 위치 초기화
