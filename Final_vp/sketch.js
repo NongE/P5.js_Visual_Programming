@@ -4,7 +4,7 @@ let house; // 집 변수
 let bridge; // 다리 변수
 let train; // 기차 변수
 let moon; // 달 변수
-let line = []; // 노선도이미지가 들어간 배열
+let subwayLine = []; // 노선도이미지가 들어간 배열
 let exchange = []; // 빠른 출구 변수
 //
 // 이미지 위치 변수 //
@@ -76,8 +76,9 @@ let fallingStar_tint = []; // 별똥별 투명값
 /// 초기화면 별똥별 효과 관련 변수 ///
 let tx = [];
 let ty = [];
-let splashStarFlag = 1;
+let splashStarFlag = 0;
 ///   끝   ///
+let teamName;
 
 function preload() {
   lint4Table = loadTable('DB/line4DB.csv', 'csv', 'header');
@@ -87,6 +88,13 @@ function preload() {
 
 function setup() {
   createCanvas(1280, 720); // 캔버스 크기 설정
+  for (let i = 0; i < 10; i++) { // 사람 수 만큼 포문 돌면서 별똥별에 시작 좌표 넣음
+
+    tx[i] = random(0, 1280);
+    ty[i] = random(0, 500);
+
+    fallingStar_tint[i] = ty[i];
+  }
 
   /// 이하 호선 콤보박스 관련 구문 ///
   lineComboBox = createSelect();
@@ -192,21 +200,21 @@ function setup() {
 
   /// 이하 이미지 로드 구문 ///
   bg = loadImage('background_2.jpg'); // 배경 이미지 로드
-  house = loadImage('house_3.png'); // 집 이미지 로드
+  house = loadImage('house_4.png'); // 집 이미지 로드
   bridge = loadImage('bridge.png'); // 다리 이미지 로드
   train = loadImage('train_2.png'); // 기차 이미지 로드
   moon = loadImage('moon.png'); // 달 이미지 로드
 
-  line[0] = loadImage('ready_img.png');
-  line[1] = loadImage('ready_img.png');
-  line[2] = loadImage('ready_img.png');
-  line[3] = loadImage('line4.png'); // 4호선 이미지 로드
-  line[4] = loadImage('ready_img.png');
-  line[5] = loadImage('ready_img.png');
-  line[6] = loadImage('line7.png'); // 7호선 이미지 로드
-  line[7] = loadImage('ready_img.png');
-  line[8] = loadImage('ready_img.png');
-  line[9] = loadImage('ready_img.png');
+  subwayLine[0] = loadImage('ready_img.png');
+  subwayLine[1] = loadImage('ready_img.png');
+  subwayLine[2] = loadImage('ready_img.png');
+  subwayLine[3] = loadImage('line4.png'); // 4호선 이미지 로드
+  subwayLine[4] = loadImage('ready_img.png');
+  subwayLine[5] = loadImage('ready_img.png');
+  subwayLine[6] = loadImage('line7.png'); // 7호선 이미지 로드
+  subwayLine[7] = loadImage('ready_img.png');
+  subwayLine[8] = loadImage('ready_img.png');
+  subwayLine[9] = loadImage('ready_img.png');
   // index 3, index 6 이외 로드된 ready_img는 임시로 넣어둔 이미지
   ///   끝   ///
 
@@ -235,6 +243,10 @@ function setup() {
   broadcastIndiv.position(150, 300);
   ///   끝   ///
 
+  teamName = createImg('test_1.png');
+  teamName.size(100, 100);
+  teamName.position(618, 493);
+
   for (let i = 0; i < 5; i++) {
     tx[i] = random(0, 1280);
     ty[i] = random(0, 500);
@@ -262,7 +274,8 @@ function draw() {
   image(house, 0, house_position_y); // 집 출력
 
   if (splashStarFlag == 0) { // 초기화면 별똥별
-    splashStar();
+    //  teamName.html("앉을자리");
+     splashStar();
   }
 
   if (lineUpdateFlag == 1) {
@@ -270,9 +283,15 @@ function draw() {
   }
 
   if (lineNumBtnFlag[getLineNum - 1] == 1) { // 해당 호선 버튼을 클릭 했을 경우
+    splashStarFlag = 1;
+    if (getTimeNum == "") {
+      getTimeNum = hour();
+      timeComboBox.value(getTimeNum + '시');
+    } // 자동으로 시간설정
+
     if (houseDownFlag == 1) { // 만약에 houseDownFlag값이 1일 경우
       tint(255, 255 - (house_position_y / 3)); // 하우스 플래그 작동 시 노선도 투명도 조정 어둡게
-      image(line[getLineNum - 1], 130, 90); // 노선도 이미지 출력
+      image(subwayLine[getLineNum - 1], 130, 90); // 노선도 이미지 출력
     } else {
       if (house_position_y == 470) { // hy값이 470일 경우
         if (lineTintCount < 255) // 노선도 점점 밝게 해줌.
@@ -280,7 +299,7 @@ function draw() {
           lineTintCount += 20;
         }
         tint(255, 255, 255, lineTintCount); // 노선도 점점 밝게 해줌.
-        image(line[getLineNum - 1], 130, 90); // 노선도 이미지 출력
+        image(subwayLine[getLineNum - 1], 130, 90); // 노선도 이미지 출력
       }
     }
   }
@@ -289,11 +308,7 @@ function draw() {
 
   if (houseDownFlag == 0 && mouseIsPressed) { // 기차가 들어오기 전 이면서 마우스 클릭했을 경우(아직 호선 선택 이전)
 
-    if(getTimeNum == "")
-    {
-      getTimeNum = hour();
-      timeComboBox.value(getTimeNum+'시');
-    }
+
     if (lineNumBtnFlag[3] == 1) { // 4호선 버튼을 선택 했고
 
 
@@ -388,6 +403,7 @@ function draw() {
     }
 
     if (station_Click_Flag == 1) { // 역을 선택 했으니 이제 집 이미지 없애고 기차 들어오게 해야하니 그걸 처리해주는 부분
+      teamName.hide();
       houseDownFlag = 1; //houseDownFlag 값 참으로 변환 집 이미지 없애야 하므로
       bridgeUpFlag = 1; // 다리 이미지 참으로 변환
       station_Click_Flag = 0; // 값 한번 초기화 했으니 다시 station_Click_Flag false로
@@ -553,13 +569,14 @@ function getLine() {
   getLineNum = lineComboBox.value().replace(/[^0-9]/g, ""); // 가져온 데이터 중 숫자만 걸러냄
   lineUpdateFlag = 1; // 사용자가 호선을 선택했으므로 업데이트가 필요해 업데이트 관련 플래그 작동
   searchFlag = 0;
+  teamName.show();
 }
 
 function getTime() {
   broadcastIndiv.hide();
   getTimeNum = timeComboBox.value().replace(/[^0-9]/g, "");
   searchFlag = 0;
-  exchangeFlag=0;
+  exchangeFlag = 0;
 
 }
 
@@ -577,6 +594,7 @@ function goToBack() {
   broadcastAllAnnoun.hide(); // 글자 지움
   broadcastIndivAnnoun.hide(); // 글자 지움
   backBtn.hide();
+  teamName.show();
 }
 
 function findData() {
@@ -640,10 +658,13 @@ function checkTable() {
 function updateDB() {
   // 사용자가 선택한 시간대에 맞는 인원 정보 로드
 
+  let trainNum=0;
   if (lineNumBtnFlag[3] == 1) {
     peopleAll = lint4Table.get(int(getTimeNum) + tmpIndex, '전체인원');
+    trainNum = lint4Table.get(int(getTimeNum) + tmpIndex, 'train');
   } else if (lineNumBtnFlag[6] == 1) {
     peopleAll = lint7Table.get(int(getTimeNum) + tmpIndex, '전체인원');
+    trainNum = lint7Table.get(int(getTimeNum) + tmpIndex, 'train');
   }
 
   if (peopleAll != compareData) { // 이전 데이터와 비교해서 만일 다르다면(사용자가 새로운 값을 선택했을 경우) 새로고침 진행
@@ -681,7 +702,7 @@ function updateDB() {
   getTimeNum = timeComboBox.value().replace(/[^0-9]/g, "");
   if (getTimeNum == "") {
     getTimeNum = hour();
-    timeComboBox.value(getTimeNum+'시');
+    timeComboBox.value(getTimeNum + '시');
   }
   //broadcastAll.html(getTimeNum + "시 " + stationName + "의 예상 이용객은 약 " + peopleAll + "명으로 <br>" + "포화도는 " + int(((peopleAll) / 26000) * 100) + "% 입니다.");
   broadcastAll.html(getTimeNum + "시 " + stationName + "의 예상 포화도는 약 " + int(((peopleAll) / 26000) * 100) + "% 입니다.");
@@ -851,7 +872,7 @@ function splashStar() {
     fallingStar_tint[i] -= 5;
 
     if (fallingStar_tint[i] < 0) { // 별똥별의 투명값이 0보다 작을경우 초기화
-      fallingStar_tint[i] = random(0, 200);
+        fallingStar_tint[i] = random(0, 200);
     }
 
     if (ty[i] > 500) {
