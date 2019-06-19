@@ -168,7 +168,7 @@ function setup() {
 
   searchData = createInput('');
   searchData.position(270, 30);
-  searchData.size(100, 35);
+  searchData.size(140, 35);
 
   searchData.style('border-radius', '6px');
   searchData.style('font-size', '20px');
@@ -176,7 +176,7 @@ function setup() {
 
   searchBtn = createButton('검색');
   searchBtn.style('font-family', 'Jua');
-  searchBtn.position(380, 30);
+  searchBtn.position(420, 30);
   searchBtn.size(60, 40);
 
   searchBtn.style('background', '#ffffffff');
@@ -308,7 +308,7 @@ function draw() {
 
   if (houseDownFlag == 0 && mouseIsPressed) { // 기차가 들어오기 전 이면서 마우스 클릭했을 경우(아직 호선 선택 이전)
 
-
+    print(mouseX, mouseY);
     if (lineNumBtnFlag[3] == 1) { // 4호선 버튼을 선택 했고
 
 
@@ -371,14 +371,15 @@ function draw() {
         station_Click_Flag = 1;
         tmpIndex = 0;
         stationName = lint7Table.get(getTimeNum, '역');
-      } else if ((mouseX > 855 && mouseX < 870) && (mouseY > 390 && mouseY < 405)) //가산디지털단지
+      } else if ((mouseX > 850 && mouseX < 860) && (mouseY > 380 && mouseY < 405)) //어대
       {
         exchangeFlag = 0;
         splashStarFlag = 1;
         station_Click_Flag = 1;
         tmpIndex = 24;
         stationName = lint7Table.get(int(getTimeNum) + 24, '역');
-      } else if ((mouseX > 293 && mouseX < 308) && (mouseY > 460 && mouseY < 475)) //고속터미널
+        print("dfasfs");
+      } else if ((mouseX > 390 && mouseX < 405) && (mouseY > 395 && mouseY < 405)) //고속터미널
       {
         exchangeFlag = 0;
         splashStarFlag = 1;
@@ -567,6 +568,11 @@ function Init() {
 
 function getLine() {
   getLineNum = lineComboBox.value().replace(/[^0-9]/g, ""); // 가져온 데이터 중 숫자만 걸러냄
+  if(getLineNum=="")
+  {
+    getLineNum = 4;
+    lineComboBox.value(getLineNum + '호선');
+  }
   lineUpdateFlag = 1; // 사용자가 호선을 선택했으므로 업데이트가 필요해 업데이트 관련 플래그 작동
   searchFlag = 0;
   teamName.show();
@@ -642,7 +648,7 @@ function checkTable() {
     /// 이하 인덱스 설정 ///
     if (stationName == '온수') {
       tmpIndex = 0;
-    } else if (stationName == '가산디지털단지') {
+    } else if (stationName == '어린이대공원') {
       tmpIndex = 24;
     } else if (stationName == '고속터미널') {
       tmpIndex = 48;
