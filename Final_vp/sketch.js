@@ -522,8 +522,6 @@ function draw() {
       exchange[0].show();
       exchange[1].show();
 
-      //image(exchange[0], 120 + (exchangeNum[0] * 115), 560, 30, 30);
-      //image(exchange[1], 122 + (exchangeNum[1] * 115), 560, 30, 30);
     }
 
   }
